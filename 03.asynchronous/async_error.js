@@ -42,7 +42,7 @@ const asynchronous = async () => {
     }
 
     try {
-      await allPromise(db, "SELECT * FROM names");
+      const rows = await allPromise(db, "SELECT * FROM names");
       console.log("Rows: ", rows);
     } catch (err) {
       console.error("Select error", err);
