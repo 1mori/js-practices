@@ -25,7 +25,7 @@ db.serialize(() => {
             console.error("Insert error", err);
           }
 
-          db.all("SELECT * FROM names", (err, rows) => {
+          db.all("SELECT * FROM names", (err) => {
             // 存在しないテーブルの名前を指定してみる
             if (err) {
               console.error("Select error", err);
