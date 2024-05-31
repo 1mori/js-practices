@@ -47,5 +47,5 @@ runPromise(
     db.close();
   })
   .catch((err) => {
-    console.error("Error: ", error);
+    console.error("Error: ", err);
   });
