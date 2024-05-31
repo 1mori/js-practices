@@ -46,7 +46,7 @@ const asynchronous = async () => {
     await runPromise(db, "DROP TABLE books");
     console.log("Table dropped");
   } catch (err) {
-    console.error("Error: ", error);
+    console.error("Error: ", err);
   } finally {
     db.close();
   }
