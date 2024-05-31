@@ -19,31 +19,28 @@ db.serialize(() => {
         }
         console.log("Insert book title with ID", this.lastID);
 
-        db.run(
-          "INSERT INTO books (title) VALUES ('あいうえお')",
-          function (err) {
-            // ユニークなテーブルなので、再度同じ本のタイトルを挿入してみようとしてみる
+        db.run("INSERT INTO books (title) VALUES (NULL)", function (err) {
+          // 非NULLなテーブルなので、NULLを挿入してみようとしてみる
+          if (err) {
+            console.error("Insert error", err);
+          }
+
+          db.all("SELECT * FROM names", (err, rows) => {
+            // 存在しないテーブルの名前を指定してみる
             if (err) {
-              console.error("Insert error", err);
+              console.error("Select error", err);
             }
 
-            db.all("SELECT * FROM names", (err, rows) => {
-              // 存在しないテーブルの名前を指定してみる
+            db.run("DROP TABLE books", (err) => {
               if (err) {
-                console.error("Select error", err);
+                console.log("Drop error", err);
+                return;
               }
-
-              db.run("DROP TABLE books", (err) => {
-                if (err) {
-                  console.log("Drop error", err);
-                  return;
-                }
-                console.log("Table dropped");
-                db.close();
-              });
+              console.log("Table dropped");
+              db.close();
             });
-          },
-        );
+          });
+        });
       });
     },
   );

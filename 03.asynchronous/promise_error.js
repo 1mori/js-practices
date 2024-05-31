@@ -32,11 +32,7 @@ runPromise(
 )
   .then(() => {
     console.log("Table created.");
-    return runPromise(db, "INSERT INTO books (title) VALUES ('あいうえお')");
-  })
-  .then((result) => {
-    console.log("Insert book title with ID", result.lastID);
-    return runPromise(db, "INSERT INTO books (title) VALUES ('あいうえお')");
+    return runPromise(db, "INSERT INTO books (title) VALUES (NULL)");
   })
   .catch((err) => {
     console.error("Insert error", err);
