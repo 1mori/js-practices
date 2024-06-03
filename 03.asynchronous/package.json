@@ -11,13 +11,6 @@
     "prettier": "^3.2.5"
   },
   "type": "module",
-  "name": "03.asynchronous",
-  "version": "1.0.0",
-  "main": "asynchronous.js",
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
     "sqlite3": "^5.1.7"
   }
