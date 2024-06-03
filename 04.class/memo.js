@@ -12,6 +12,30 @@ const rl = readline.createInterface({ input, output });
 
 const db = new sqlite3.Database("./memo.sqlite3");
 
+function runPromise(db, query, params = []) {
+  return new Promise((resolve, reject) => {
+    db.run(query, params, function (err) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(this);
+      }
+    });
+  });
+}
+
+function allPromise(db, query, params = []) {
+  return new Promise((resolve, reject) => {
+    db.all(query, params, (err, rows) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(rows);
+      }
+    });
+  });
+}
+
 var inputLines = [];
 
 rl.on("line", (line) => {
