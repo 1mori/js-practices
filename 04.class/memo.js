@@ -10,15 +10,12 @@ const argv = minimist(process.argv.slice(2));
 
 const rl = readline.createInterface({ input, output });
 
-async function main() {
-  try {
-    const answer = await rl.question("");
-    // SQLの挿入処理を書く
-  } catch (err) {
-    console.error("Error reading input:", err);
-  } finally {
-    rl.close();
-  }
-}
+var inputLines = [];
 
-main();
+rl.on("line", (line) => {
+  inputLines.push(line);
+});
+
+rl.on("close", () => {
+  console.log(inputLines);
+});
