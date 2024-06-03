@@ -13,7 +13,7 @@ const asynchronous = async () => {
 
     const result = await runPromise(
       db,
-      "INSERT INTO books (title) VALUES ('あいうえお')",
+      "INSERT INTO books (title) VALUES ('Git入門')",
     );
     console.log("Insert book title with ID", result.lastID);
 

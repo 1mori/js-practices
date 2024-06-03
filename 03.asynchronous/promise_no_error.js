@@ -9,7 +9,7 @@ runPromise(
 )
   .then(() => {
     console.log("Create Table");
-    return runPromise(db, "INSERT INTO books (title) VALUES ('あいうえお')");
+    return runPromise(db, "INSERT INTO books (title) VALUES ('Git入門')");
   })
   .then((result) => {
     console.log("Insert book title with ID", result.lastID);
