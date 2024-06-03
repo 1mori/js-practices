@@ -10,6 +10,8 @@ const argv = minimist(process.argv.slice(2));
 
 const rl = readline.createInterface({ input, output });
 
+const db = new sqlite3.Database("./memo.sqlite3");
+
 var inputLines = [];
 
 rl.on("line", (line) => {
