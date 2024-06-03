@@ -9,7 +9,7 @@ const asynchronous = async () => {
       db,
       "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
     );
-    console.log("Table created");
+    console.log("Create table");
 
     const result = await runPromise(
       db,
