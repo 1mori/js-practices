@@ -19,14 +19,14 @@ db.serialize(() => {
         }
         console.log("Insert book title with ID", this.lastID);
 
+        // 非NULLなカラムなので、NULLを挿入してみようとしてみる
         db.run("INSERT INTO books (title) VALUES (NULL)", function (err) {
-          // 非NULLなテーブルなので、NULLを挿入してみようとしてみる
           if (err) {
             console.error("Insert error", err);
           }
 
+          // 存在しないテーブルの名前を指定してみる
           db.all("SELECT * FROM names", (err) => {
-            // 存在しないテーブルの名前を指定してみる
             if (err) {
               console.error("Select error", err);
             }
