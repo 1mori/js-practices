@@ -6,20 +6,20 @@ var argv = minimist(process.argv.slice(2));
 
 const today = new Date();
 let year = today.getFullYear();
-let month = today.getMonth() + 1;
+let month = today.getMonth();
 
 if (argv["y"] !== undefined) {
   year = Number(argv["y"]);
 }
 
 if (argv["m"] !== undefined) {
-  month = Number(argv["m"]);
+  month = Number(argv["m"] - 1);
 }
 
 const first_date = new Date(year, month, 1);
 const last_date = new Date(year, month + 1, 0);
 
-console.log("      " + month + "月 " + year);
+console.log("      " + (month + 1) + "月 " + year);
 console.log("日 月 火 水 木 金 土");
 
 const spaces = " ".repeat(3);
