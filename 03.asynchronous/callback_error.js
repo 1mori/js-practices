@@ -23,6 +23,7 @@ db.run(
           console.log("Table dropped");
 
           db.close();
+          console.log("Closed database");
         });
       });
     });
