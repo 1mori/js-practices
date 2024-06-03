@@ -25,7 +25,8 @@ const asynchronous = async () => {
   } catch (err) {
     console.error("Error: ", err);
   } finally {
-    db.close();
+    await closePromise(db);
+    console.log("Closed database");
   }
 };
 

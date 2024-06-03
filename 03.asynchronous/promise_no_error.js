@@ -21,7 +21,9 @@ runPromise(
   })
   .then(() => {
     console.log("Table dropped");
-    db.close();
+    return closePromise(db);
+  }).then(() => {
+    console.log("Closed database");
   })
   .catch((err) => {
     console.error("Error: ", err);

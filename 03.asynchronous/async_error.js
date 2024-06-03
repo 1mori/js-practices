@@ -31,6 +31,7 @@ const asynchronous = async () => {
     console.error("Error: ", err);
   } finally {
     db.close();
+    console.log("Closed database");
   }
 };
 
