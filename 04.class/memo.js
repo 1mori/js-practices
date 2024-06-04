@@ -49,7 +49,40 @@ class MemoApp {
     }
   }
 
-  async read() {}
+  async read() {
+    try {
+      const rows = await allPromise(this.db, "SELECT id, text FROM memo");
+
+      const choices = rows.map((row) => ({
+        name: row.text.split("\n")[0],
+        value: row.id,
+      }));
+
+      const answers = await inquirer.prompt([
+        {
+          name: "memoToRead",
+          type: "list",
+          message: "Choose a memo you want to read:",
+          choices: choices,
+        },
+      ]);
+
+      const memoIdToRead = answers.memoToRead;
+      const selectedMemo = rows.find((row) => row.id === memoIdToRead);
+      if (selectedMemo) {
+        console.log("\n" + selectedMemo.text);
+      }
+    } catch (err) {
+      console.error("Select error: ", err);
+    } finally {
+      await this.closeDatabase();
+      this.rl.close();
+    }
+  }
+
+  async delete() {
+    try {
+      const rows = await allPromise(this.db, "SELECT id, text FROM memo");
 
   async delete() {}
 
@@ -64,6 +97,8 @@ class MemoApp {
   async run() {
     if (this.argv.l) {
       await this.list();
+    } else if (this.argv.r) {
+      await this.read();
     } else {
       this.add();
     }
