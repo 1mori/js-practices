@@ -67,8 +67,12 @@ rl.on("close", async () => {
       console.log(row["text"]);
     }
   } catch (err) {
-    console.error("Select error", err);
+    console.error("Select error: ", err);
   }
 
-  await closePromise(db);
+  try {
+    await closePromise(db);
+  } catch (err) {
+    console.error("Close error: ", err);
+  }
 });
