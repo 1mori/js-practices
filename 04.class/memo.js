@@ -8,13 +8,15 @@ import sqlite3 from "sqlite3";
 
 import { runPromise, allPromise, closePromise } from "./db_utils.js";
 
-const argv = minimist(process.argv.slice(2));
-
-const rl = readline.createInterface({ input, output });
-
-const db = new sqlite3.Database("./memo.sqlite3");
-
 var inputText = "";
+
+class MemoApp {
+  constructor() {
+    this.argv = minimist(process.argv.slice(2));
+    this.rl = readline.createInterface({ input, output });
+    this.db = new sqlite3.Database("./memo.sqlite3");
+  }
+}
 
 rl.on("line", (line) => {
   inputText += line + "\n";
