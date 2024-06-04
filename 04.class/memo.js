@@ -58,27 +58,15 @@ class MemoApp {
       console.error("Close error: ", err);
     }
   }
+
+  async run() {
+    if (this.argv.l) {
+      await this.list();
+    } else {
+      this.add();
+    }
+  }
 }
 
-rl.on("close", async () => {
-  try {
-    await runPromise(db, "INSERT INTO memo (text) VALUES (?)", [inputText]);
-  } catch (err) {
-    console.error("Insert error: ", err);
-  }
-
-  try {
-    const rows = await allPromise(db, "SELECT text from memo");
-    for (const row of rows) {
-      console.log(row["text"]);
-    }
-  } catch (err) {
-    console.error("Select error: ", err);
-  }
-
-  try {
-    await closePromise(db);
-  } catch (err) {
-    console.error("Close error: ", err);
-  }
-});
+const app = new MemoApp();
+app.run();
