@@ -8,8 +8,6 @@ import sqlite3 from "sqlite3";
 
 import { runPromise, allPromise, closePromise } from "./db_utils.js";
 
-var inputText = "";
-
 class MemoApp {
   constructor() {
     this.argv = minimist(process.argv.slice(2));
@@ -17,7 +15,21 @@ class MemoApp {
     this.db = new sqlite3.Database("./memo.sqlite3");
   }
 
-  async add() {}
+  add() {
+    let inputText = "";
+
+    rl.on("line", (line) => {
+      inputText += line + "\n";
+    });
+    rl.on("close", async () => {
+      try {
+        await runPromise(this.db, "INSERT INTO memo (text) VALUES (?)", [inputText]);
+      } catch (err) {
+        console.error("Insert error: ", err);
+      } finally {
+        await this.closeDatabase();
+      }
+  },
 
   async list() {}
 
@@ -25,10 +37,6 @@ class MemoApp {
 
   async delete() {}
 }
-
-rl.on("line", (line) => {
-  inputText += line + "\n";
-});
 
 rl.on("close", async () => {
   try {
