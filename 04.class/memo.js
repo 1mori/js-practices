@@ -36,6 +36,18 @@ function allPromise(db, query, params = []) {
   });
 }
 
+function closePromise(db) {
+  return new Promise((resolve, reject) => {
+    db.close((err) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
+    });
+  });
+}
+
 var inputText = "";
 
 rl.on("line", (line) => {
@@ -58,5 +70,5 @@ rl.on("close", async () => {
     console.error("Select error", err);
   }
 
-  db.close();
+  await closePromise(db);
 });
