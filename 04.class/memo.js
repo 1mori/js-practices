@@ -5,6 +5,7 @@ import { stdin as input, stdout as output } from "node:process";
 
 import minimist from "minimist";
 import sqlite3 from "sqlite3";
+import inquirer from "inquirer";
 
 import { runPromise, allPromise, closePromise } from "./db_utils.js";
 
