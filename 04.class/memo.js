@@ -29,7 +29,8 @@ class MemoApp {
       } finally {
         await this.closeDatabase();
       }
-  },
+    });
+  }
 
   async list() {}
 
