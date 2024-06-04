@@ -44,6 +44,7 @@ class MemoApp {
       console.error("Select error: ", err);
     } finally {
       await this.closeDatabase();
+      this.rl.close();
     }
   }
 
