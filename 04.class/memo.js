@@ -36,12 +36,27 @@ function allPromise(db, query, params = []) {
   });
 }
 
-var inputLines = [];
+var inputText = "";
 
 rl.on("line", (line) => {
-  inputLines.push(line);
+  inputText += line + "\n";
 });
 
-rl.on("close", () => {
-  console.log(inputLines);
+rl.on("close", async () => {
+  try {
+    await runPromise(db, "INSERT INTO memo (text) VALUES (?)", [inputText]);
+  } catch (err) {
+    console.error("Insert error: ", err);
+  }
+
+  try {
+    const rows = await allPromise(db, "SELECT text from memo");
+    for (const row of rows) {
+      console.log(row["text"]);
+    }
+  } catch (err) {
+    console.error("Select error", err);
+  }
+
+  db.close();
 });
