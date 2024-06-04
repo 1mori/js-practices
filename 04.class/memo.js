@@ -23,7 +23,9 @@ class MemoApp {
     });
     rl.on("close", async () => {
       try {
-        await runPromise(this.db, "INSERT INTO memo (text) VALUES (?)", [inputText]);
+        await runPromise(this.db, "INSERT INTO memo (text) VALUES (?)", [
+          inputText,
+        ]);
       } catch (err) {
         console.error("Insert error: ", err);
       } finally {
@@ -32,7 +34,18 @@ class MemoApp {
     });
   }
 
-  async list() {}
+  async list() {
+    try {
+      const rows = await allPromise(this.db, "SELECT text FROM memo");
+      rows.forEach((row) => {
+        console.log(row["text"].split("\n")[0]);
+      });
+    } catch (err) {
+      console.error("Select error: ", err);
+    } finally {
+      await this.closeDatabase();
+    }
+  }
 
   async read() {}
 
