@@ -50,6 +50,14 @@ class MemoApp {
   async read() {}
 
   async delete() {}
+
+  async closeDatabase() {
+    try {
+      await closePromise(this.db);
+    } catch (err) {
+      console.error("Close error: ", err);
+    }
+  }
 }
 
 rl.on("close", async () => {
