@@ -11,11 +11,11 @@ import { runPromise, allPromise, closePromise } from "./db_utils.js";
 class MemoApp {
   constructor() {
     this.argv = minimist(process.argv.slice(2));
-    this.rl = readline.createInterface({ input, output });
     this.db = new sqlite3.Database("./memo.sqlite3");
   }
 
   add() {
+    const rl = readline.createInterface({ input, output });
     let inputText = "";
 
     rl.on("line", (line) => {
