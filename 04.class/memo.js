@@ -16,6 +16,14 @@ class MemoApp {
     this.rl = readline.createInterface({ input, output });
     this.db = new sqlite3.Database("./memo.sqlite3");
   }
+
+  async add() {}
+
+  async list() {}
+
+  async read() {}
+
+  async delete() {}
 }
 
 rl.on("line", (line) => {
