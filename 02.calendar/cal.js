@@ -14,10 +14,8 @@ const lastDate = new Date(year, month + 1, 0);
 console.log(`      ${month + 1}月 ${year}`);
 console.log("日 月 火 水 木 金 土");
 
-const spaces = " ".repeat(3);
-
 for (let i = 0; i < firstDate.getDay(); i++) {
-  process.stdout.write(spaces);
+  process.stdout.write(" ".repeat(3));
 }
 
 for (
