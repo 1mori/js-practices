@@ -5,16 +5,8 @@ import minimist from "minimist";
 const argv = minimist(process.argv.slice(2));
 
 const today = new Date();
-let year = today.getFullYear();
-let month = today.getMonth();
-
-if (argv["y"] !== undefined) {
-  year = Number(argv["y"]);
-}
-
-if (argv["m"] !== undefined) {
-  month = Number(argv["m"] - 1);
-}
+const year = argv["y"] !== undefined ? argv["y"] : today.getFullYear();
+const month = argv["m"] !== undefined ? argv["m"] : today.getMonth();
 
 const first_date = new Date(year, month, 1);
 const last_date = new Date(year, month + 1, 0);
