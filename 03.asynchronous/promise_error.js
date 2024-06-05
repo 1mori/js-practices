@@ -8,7 +8,7 @@ runPromise(
   "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
 )
   .then(() => {
-    console.log("Create table");
+    console.log("Table creation completed successfully");
     return runPromise(db, "INSERT INTO books (title) VALUES (NULL)");
   })
   .catch((err) => {

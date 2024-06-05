@@ -7,7 +7,7 @@ await runPromise(
   db,
   "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
 );
-console.log("Create table");
+console.log("Table creation completed successfully");
 
 const result = await runPromise(
   db,
