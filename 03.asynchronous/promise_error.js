@@ -22,9 +22,7 @@ runPromise(
   .then(() => {
     console.log("Table dropped");
     return closePromise(db);
-  }).then(() => {
-    console.log("Closed database");
   })
-  .catch((err) => {
-    console.error("Error: ", err);
+  .then(() => {
+    console.log("Closed database");
   });
