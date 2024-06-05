@@ -11,7 +11,7 @@ db.run(
       console.log("Insert book title with ID", this.lastID);
 
       db.all("SELECT * FROM books", (_, rows) => {
-        console.log("Rows :", rows);
+        console.log("Rows: ", rows);
 
         db.run("DROP TABLE books", () => {
           console.log("Table dropped");
