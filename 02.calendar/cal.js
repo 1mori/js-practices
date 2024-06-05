@@ -19,14 +19,14 @@ for (let i = 0; i < firstDate.getDay(); i++) {
 }
 
 for (
-  let current_date = firstDate;
-  current_date <= lastDate;
-  current_date.setDate(current_date.getDate() + 1)
+  let currentDate = firstDate;
+  currentDate <= lastDate;
+  currentDate.setDate(currentDate.getDate() + 1)
 ) {
   process.stdout.write(
-    current_date.getDate().toString().padStart(2, " ") + " ",
+    currentDate.getDate().toString().padStart(2, " ") + " ",
   );
-  if (current_date.getDay() === 6) {
+  if (currentDate.getDay() === 6) {
     console.log();
   }
 }
