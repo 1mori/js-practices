@@ -11,8 +11,8 @@ import { runPromise, allPromise, closePromise } from "./db_utils.js";
 
 class MemoApp {
   constructor() {
-    this.argv = minimist(process.argv.slice(2));
-    this.rl = readline.createInterface({ input, output });
+    this.option = minimist(process.argv.slice(2));
+    this.rl = readline.createInterface({ input, output }); //　ここ
     this.db = new sqlite3.Database("./memo.sqlite3");
   }
 
@@ -120,11 +120,11 @@ class MemoApp {
   }
 
   async run() {
-    if (this.argv.l) {
+    if (this.option.l) {
       await this.#list();
-    } else if (this.argv.r) {
+    } else if (this.option.r) {
       await this.#read();
-    } else if (this.argv.d) {
+    } else if (this.option.d) {
       await this.#delete();
     } else {
       this.#add();
