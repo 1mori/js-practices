@@ -23,11 +23,11 @@ for (
   currentDate <= lastDate;
   currentDate.setDate(currentDate.getDate() + 1)
 ) {
-  process.stdout.write(
-    currentDate.getDate().toString().padStart(2, " ") + " ",
-  );
+  process.stdout.write(currentDate.getDate().toString().padStart(2, " "));
   if (currentDate.getDay() === 6) {
     console.log();
+  } else {
+    process.stdout.write(" ");
   }
 }
 console.log();
