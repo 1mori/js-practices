@@ -16,7 +16,7 @@ class MemoApp {
     this.db = new sqlite3.Database("./memo.sqlite3");
   }
 
-  add() {
+  #add() {
     let inputText = "";
 
     this.rl.on("line", (line) => {
@@ -30,12 +30,12 @@ class MemoApp {
       } catch (err) {
         console.error(`Insert error: ${err}`);
       } finally {
-        await this.closeDatabase();
+        await this.#closeDatabase();
       }
     });
   }
 
-  async list() {
+  async #list() {
     try {
       const rows = await allPromise(this.db, "SELECT text FROM memo");
       rows.forEach((row) => {
@@ -44,12 +44,12 @@ class MemoApp {
     } catch (err) {
       console.error(`Select error: ${err}`);
     } finally {
-      await this.closeDatabase();
+      await this.#closeDatabase();
       this.rl.close();
     }
   }
 
-  async read() {
+  async #read() {
     try {
       const rows = await allPromise(this.db, "SELECT id, text FROM memo");
 
@@ -75,12 +75,12 @@ class MemoApp {
     } catch (err) {
       console.error(`Select error: ${err}`);
     } finally {
-      await this.closeDatabase();
+      await this.#closeDatabase();
       this.rl.close();
     }
   }
 
-  async delete() {
+  async #delete() {
     try {
       const rows = await allPromise(this.db, "SELECT id, text FROM memo");
 
@@ -106,12 +106,12 @@ class MemoApp {
     } catch (err) {
       console.error(`Delete error: ${err}`);
     } finally {
-      await this.closeDatabase();
+      await this.#closeDatabase();
       this.rl.close();
     }
   }
 
-  async closeDatabase() {
+  async #closeDatabase() {
     try {
       await closePromise(this.db);
     } catch (err) {
@@ -121,13 +121,13 @@ class MemoApp {
 
   async run() {
     if (this.argv.l) {
-      await this.list();
+      await this.#list();
     } else if (this.argv.r) {
-      await this.read();
+      await this.#read();
     } else if (this.argv.d) {
-      await this.delete();
+      await this.#delete();
     } else {
-      this.add();
+      this.#add();
     }
   }
 }
