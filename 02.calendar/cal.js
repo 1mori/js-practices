@@ -2,7 +2,7 @@
 
 import minimist from "minimist";
 
-var argv = minimist(process.argv.slice(2));
+const argv = minimist(process.argv.slice(2));
 
 const today = new Date();
 let year = today.getFullYear();
