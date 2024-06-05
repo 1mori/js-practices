@@ -12,17 +12,17 @@ import { runPromise, allPromise, closePromise } from "./db_utils.js";
 class MemoApp {
   constructor() {
     this.option = minimist(process.argv.slice(2));
-    this.rl = readline.createInterface({ input, output }); //　ここ
+    this.userInput = readline.createInterface({ input, output });
     this.db = new sqlite3.Database("./memo.sqlite3");
   }
 
   #add() {
     let inputText = "";
 
-    this.rl.on("line", (line) => {
+    this.userInput.on("line", (line) => {
       inputText += line + "\n";
     });
-    this.rl.on("close", async () => {
+    this.userInput.on("close", async () => {
       try {
         await runPromise(this.db, "INSERT INTO memo (text) VALUES (?)", [
           inputText,
@@ -45,7 +45,7 @@ class MemoApp {
       console.error(`Select error: ${err}`);
     } finally {
       await this.#closeDatabase();
-      this.rl.close();
+      this.userInput.close();
     }
   }
 
@@ -76,7 +76,7 @@ class MemoApp {
       console.error(`Select error: ${err}`);
     } finally {
       await this.#closeDatabase();
-      this.rl.close();
+      this.userInput.close();
     }
   }
 
@@ -107,7 +107,7 @@ class MemoApp {
       console.error(`Delete error: ${err}`);
     } finally {
       await this.#closeDatabase();
-      this.rl.close();
+      this.userInput.close();
     }
   }
 
