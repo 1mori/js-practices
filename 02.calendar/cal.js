@@ -11,7 +11,7 @@ const month = argv["m"] !== undefined ? argv["m"] : today.getMonth();
 const firstDate = new Date(year, month, 1);
 const lastDate = new Date(year, month + 1, 0);
 
-console.log("      " + (month + 1) + "月 " + year);
+console.log(`      ${month + 1}月 ${year}`);
 console.log("日 月 火 水 木 金 土");
 
 const spaces = " ".repeat(3);
