@@ -9,15 +9,11 @@ db.run(
 
     // 非NULLなカラムなので、NULLを挿入してみようとしてみる
     db.run("INSERT INTO books (title) VALUES (NULL)", function (err) {
-      if (err) {
-        console.error("Insert error", err);
-      }
+      console.error("Insert error", err);
 
       // 存在しないテーブルの名前を指定してみる
       db.all("SELECT * FROM names", (err) => {
-        if (err) {
-          console.error("Select error", err);
-        }
+        console.error("Select error", err);
 
         db.run("DROP TABLE books", () => {
           console.log("Table dropped");
