@@ -13,7 +13,7 @@ const result = await runPromise(
   db,
   "INSERT INTO books (title) VALUES ('Git入門')",
 );
-console.log(`Book title inserted with ID ${this.lastID}`);
+console.log(`Book title inserted with ID ${result.lastID}`);
 
 const rows = await allPromise(db, "SELECT * FROM books");
 console.log(`Retrieved rows: ${JSON.stringify(rows)}`);

@@ -12,7 +12,7 @@ runPromise(
     return runPromise(db, "INSERT INTO books (title) VALUES ('Git入門')");
   })
   .then((result) => {
-    console.log(`Book title inserted with ID ${this.lastID}`);
+    console.log(`Book title inserted with ID ${result.lastID}`);
     return allPromise(db, "SELECT * FROM books");
   })
   .then((rows) => {
