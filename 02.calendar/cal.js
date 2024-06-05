@@ -8,21 +8,21 @@ const today = new Date();
 const year = argv["y"] !== undefined ? argv["y"] : today.getFullYear();
 const month = argv["m"] !== undefined ? argv["m"] : today.getMonth();
 
-const first_date = new Date(year, month, 1);
-const last_date = new Date(year, month + 1, 0);
+const firstDate = new Date(year, month, 1);
+const lastDate = new Date(year, month + 1, 0);
 
 console.log("      " + (month + 1) + "月 " + year);
 console.log("日 月 火 水 木 金 土");
 
 const spaces = " ".repeat(3);
 
-for (let i = 0; i < first_date.getDay(); i++) {
+for (let i = 0; i < firstDate.getDay(); i++) {
   process.stdout.write(spaces);
 }
 
 for (
-  let current_date = first_date;
-  current_date <= last_date;
+  let current_date = firstDate;
+  current_date <= lastDate;
   current_date.setDate(current_date.getDate() + 1)
 ) {
   process.stdout.write(
