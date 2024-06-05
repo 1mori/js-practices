@@ -28,7 +28,7 @@ class MemoApp {
           inputText,
         ]);
       } catch (err) {
-        console.error("Insert error: ", err);
+        console.error(`Insert error: ${err}`);
       } finally {
         await this.closeDatabase();
       }
@@ -42,7 +42,7 @@ class MemoApp {
         console.log(row["text"].split("\n")[0]);
       });
     } catch (err) {
-      console.error("Select error: ", err);
+      console.error(`Select error: ${err}`);
     } finally {
       await this.closeDatabase();
       this.rl.close();
@@ -73,7 +73,7 @@ class MemoApp {
         console.log("\n" + selectedMemo.text);
       }
     } catch (err) {
-      console.error("Select error: ", err);
+      console.error(`Select error: ${err}`);
     } finally {
       await this.closeDatabase();
       this.rl.close();
@@ -104,7 +104,7 @@ class MemoApp {
       ]);
       console.log("Memo deleted.");
     } catch (err) {
-      console.error("Delete error: ", err);
+      console.error(`Delete error: ${err}`);
     } finally {
       await this.closeDatabase();
       this.rl.close();
@@ -115,7 +115,7 @@ class MemoApp {
     try {
       await closePromise(this.db);
     } catch (err) {
-      console.error("Close error: ", err);
+      console.error(`Close error: ${err}`);
     }
   }
 
