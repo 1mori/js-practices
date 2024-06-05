@@ -26,5 +26,5 @@ try {
 await runPromise(db, "DROP TABLE books");
 console.log("Table dropped");
 
-db.close();
+await closePromise(db);
 console.log("Closed database");
