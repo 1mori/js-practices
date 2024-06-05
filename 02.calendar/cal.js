@@ -19,7 +19,7 @@ for (let i = 0; i < firstDate.getDay(); i++) {
 }
 
 for (
-  let currentDate = firstDate;
+  let currentDate = structuredClone(firstDate);
   currentDate <= lastDate;
   currentDate.setDate(currentDate.getDate() + 1)
 ) {
