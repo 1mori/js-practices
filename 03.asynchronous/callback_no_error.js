@@ -14,7 +14,7 @@ db.run(
         console.log("Rows: ", rows);
 
         db.run("DROP TABLE books", () => {
-          console.log("Table dropped");
+          console.log("Table drop completed successfully");
 
           db.close(() => {
             console.log("Closed database");

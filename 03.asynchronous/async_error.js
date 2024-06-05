@@ -22,7 +22,7 @@ try {
 }
 
 await runPromise(db, "DROP TABLE books");
-console.log("Table dropped");
+console.log("Table drop completed successfully");
 
 await closePromise(db);
 console.log("Closed database");

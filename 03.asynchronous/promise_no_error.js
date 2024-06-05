@@ -20,7 +20,7 @@ runPromise(
     return runPromise(db, "DROP TABLE books");
   })
   .then(() => {
-    console.log("Table dropped");
+    console.log("Table drop completed successfully");
     return closePromise(db);
   })
   .then(() => {
