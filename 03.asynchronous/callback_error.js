@@ -22,8 +22,9 @@ db.run(
         db.run("DROP TABLE books", () => {
           console.log("Table dropped");
 
-          db.close();
-          console.log("Closed database");
+          db.close(() => {
+            console.log("Closed database");
+          });
         });
       });
     });
