@@ -12,11 +12,11 @@ runPromise(
     return runPromise(db, "INSERT INTO books (title) VALUES (NULL)");
   })
   .catch((err) => {
-    console.error("Insert error", err);
+    console.error(`Insert error: ${err}`);
     return allPromise(db, "SELECT * FROM names");
   })
   .catch((err) => {
-    console.error("Select error", err);
+    console.error(`Select error: ${err}`);
     return runPromise(db, "DROP TABLE books");
   })
   .then(() => {
@@ -24,5 +24,5 @@ runPromise(
     return closePromise(db);
   })
   .then(() => {
-    console.log("Closed database");
+    console.log("Database connection closed");
   });

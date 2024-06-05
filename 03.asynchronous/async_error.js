@@ -12,17 +12,17 @@ console.log("Table creation completed successfully");
 try {
   await runPromise(db, "INSERT INTO books (title) VALUES (NULL)");
 } catch (err) {
-  console.error("Insert error", err);
+  console.error(`Insert error: ${err}`);
 }
 
 try {
   await allPromise(db, "SELECT * FROM names");
 } catch (err) {
-  console.error("Select error", err);
+  console.error(`Select error: ${err}`);
 }
 
 await runPromise(db, "DROP TABLE books");
 console.log("Table drop completed successfully");
 
 await closePromise(db);
-console.log("Closed database");
+console.log("Database connection closed");
