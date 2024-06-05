@@ -11,14 +11,12 @@ console.log("Table creation completed successfully");
 
 try {
   await runPromise(db, "INSERT INTO books (title) VALUES (NULL)");
-  console.log("Insert book title with ID", this.lastID);
 } catch (err) {
   console.error("Insert error", err);
 }
 
 try {
-  const rows = await allPromise(db, "SELECT * FROM names");
-  console.log("Rows: ", rows);
+  await allPromise(db, "SELECT * FROM names");
 } catch (err) {
   console.error("Select error", err);
 }
