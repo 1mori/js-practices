@@ -6,7 +6,7 @@ const argv = minimist(process.argv.slice(2));
 
 const today = new Date();
 const year = argv["y"] !== undefined ? argv["y"] : today.getFullYear();
-const month = argv["m"] !== undefined ? argv["m"] : today.getMonth();
+const month = argv["m"] !== undefined ? argv["m"] - 1 : today.getMonth();
 
 const firstDate = new Date(year, month, 1);
 const lastDate = new Date(year, month + 1, 0);
