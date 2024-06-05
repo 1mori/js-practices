@@ -12,11 +12,11 @@ runPromise(
     return runPromise(db, "INSERT INTO books (title) VALUES ('Git入門')");
   })
   .then((result) => {
-    console.log("Insert book title with ID", result.lastID);
+    console.log(`Book title inserted with ID ${this.lastID}`);
     return allPromise(db, "SELECT * FROM books");
   })
   .then((rows) => {
-    console.log("Rows: ", rows);
+    console.log(`Retrieved rows: ${JSON.stringify(rows)}`);
     return runPromise(db, "DROP TABLE books");
   })
   .then(() => {
@@ -24,5 +24,5 @@ runPromise(
     return closePromise(db);
   })
   .then(() => {
-    console.log("Closed database");
+    console.log("Database connection closed");
   });

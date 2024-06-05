@@ -8,16 +8,16 @@ db.run(
     console.log("Table creation completed successfully");
 
     db.run("INSERT INTO books (title) VALUES ('Git入門')", function () {
-      console.log("Insert book title with ID", this.lastID);
+      console.log(`Book title inserted with ID ${this.lastID}`);
 
       db.all("SELECT * FROM books", (_, rows) => {
-        console.log("Rows: ", rows);
+        console.log(`Retrieved rows: ${JSON.stringify(rows)}`);
 
         db.run("DROP TABLE books", () => {
           console.log("Table drop completed successfully");
 
           db.close(() => {
-            console.log("Closed database");
+            console.log("Database connection closed");
           });
         });
       });
