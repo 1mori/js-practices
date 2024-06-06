@@ -8,21 +8,23 @@ runPromise(
   "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
 )
   .then(() => {
-    console.log("Table creation completed successfully");
+    console.log("booksテーブルを作成しました");
     return runPromise(db, "INSERT INTO books (title) VALUES ('Git入門')");
   })
   .then((result) => {
-    console.log(`Book title inserted with ID ${result.lastID}`);
+    console.log(
+      `bookテーブルに本のタイトルを追加しました 自動採番されたID: ${result.lastID}`,
+    );
     return allPromise(db, "SELECT * FROM books");
   })
   .then((rows) => {
-    console.log(`Retrieved rows: ${JSON.stringify(rows)}`);
+    console.log(`取得したレコード: ${JSON.stringify(rows)}`);
     return runPromise(db, "DROP TABLE books");
   })
   .then(() => {
-    console.log("Table drop completed successfully");
+    console.log("booksテーブルを削除しました");
     return closePromise(db);
   })
   .then(() => {
-    console.log("Database connection closed");
+    console.log("データベースが切断されました");
   });

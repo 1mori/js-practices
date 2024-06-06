@@ -7,7 +7,7 @@ await runPromise(
   db,
   "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
 );
-console.log("Table creation completed successfully");
+console.log("booksテーブルを作成しました");
 
 try {
   await runPromise(db, "INSERT INTO books (title) VALUES (NULL)");
@@ -30,7 +30,7 @@ try {
 }
 
 await runPromise(db, "DROP TABLE books");
-console.log("Table drop completed successfully");
+console.log("booksテーブルを削除しました");
 
 await closePromise(db);
-console.log("Database connection closed");
+console.log("データベースが切断されました");

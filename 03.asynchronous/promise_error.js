@@ -8,7 +8,7 @@ runPromise(
   "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
 )
   .then(() => {
-    console.log("Table creation completed successfully");
+    console.log("booksテーブルを作成しました");
     return runPromise(db, "INSERT INTO books (title) VALUES (NULL)");
   })
   .catch((err) => {
@@ -28,9 +28,9 @@ runPromise(
     return runPromise(db, "DROP TABLE books");
   })
   .then(() => {
-    console.log("Table drop completed successfully");
+    console.log("booksテーブルを削除しました");
     return closePromise(db);
   })
   .then(() => {
-    console.log("Database connection closed");
+    console.log("データベースが切断されました");
   });

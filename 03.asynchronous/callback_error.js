@@ -5,7 +5,7 @@ const db = new sqlite3.Database(":memory:");
 db.run(
   "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
   () => {
-    console.log("Table creation completed successfully");
+    console.log("booksテーブルを作成しました");
 
     // 非NULLなカラムなので、NULLを挿入してみようとしてみる
     db.run("INSERT INTO books (title) VALUES (NULL)", function (err) {
@@ -24,10 +24,10 @@ db.run(
         }
 
         db.run("DROP TABLE books", () => {
-          console.log("Table drop completed successfully");
+          console.log("booksテーブルを削除しました");
 
           db.close(() => {
-            console.log("Database connection closed");
+            console.log("データベースが切断されました");
           });
         });
       });
