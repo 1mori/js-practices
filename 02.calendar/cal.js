@@ -24,12 +24,10 @@ for (
   currentDate.setDate(currentDate.getDate() + 1)
 ) {
   process.stdout.write(currentDate.getDate().toString().padStart(2, " "));
-  if (
-    currentDate.getDay() === 6 ||
-    currentDate.getTime() === lastDate.getTime()
-  ) {
+  if (currentDate.getDay() === 6) {
     console.log();
-  } else {
+  } else if (currentDate.getTime() !== lastDate.getTime()) {
     process.stdout.write(" ");
   }
 }
+console.log();
