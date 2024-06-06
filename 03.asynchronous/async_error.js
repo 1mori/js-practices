@@ -12,13 +12,21 @@ console.log("Table creation completed successfully");
 try {
   await runPromise(db, "INSERT INTO books (title) VALUES (NULL)");
 } catch (err) {
-  console.error(`Insert error: ${err}`);
+  if (err instanceof Error && err.code === "SQLITE_CONSTRAINT") {
+    console.error(err.message);
+  } else {
+    throw err;
+  }
 }
 
 try {
   await allPromise(db, "SELECT * FROM names");
 } catch (err) {
-  console.error(`Select error: ${err}`);
+  if (err instanceof Error && err.code === "SQLITE_ERROR") {
+    console.error(err.message);
+  } else {
+    throw err;
+  }
 }
 
 await runPromise(db, "DROP TABLE books");

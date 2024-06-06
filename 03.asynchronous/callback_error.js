@@ -9,11 +9,19 @@ db.run(
 
     // 非NULLなカラムなので、NULLを挿入してみようとしてみる
     db.run("INSERT INTO books (title) VALUES (NULL)", function (err) {
-      console.error(`Insert error: ${err}`);
+      if (err instanceof Error && err.code === "SQLITE_CONSTRAINT") {
+        console.error(err.message);
+      } else {
+        throw err;
+      }
 
       // 存在しないテーブルの名前を指定してみる
       db.all("SELECT * FROM names", (err) => {
-        console.error(`Select error: ${err}`);
+        if (err instanceof Error && err.code === "SQLITE_ERROR") {
+          console.error(err.message);
+        } else {
+          throw err;
+        }
 
         db.run("DROP TABLE books", () => {
           console.log("Table drop completed successfully");

@@ -12,11 +12,19 @@ runPromise(
     return runPromise(db, "INSERT INTO books (title) VALUES (NULL)");
   })
   .catch((err) => {
-    console.error(`Insert error: ${err}`);
+    if (err instanceof Error && err.code === "SQLITE_CONSTRAINT") {
+      console.error(err.message);
+    } else {
+      throw err;
+    }
     return allPromise(db, "SELECT * FROM names");
   })
   .catch((err) => {
-    console.error(`Select error: ${err}`);
+    if (err instanceof Error && err.code === "SQLITE_ERROR") {
+      console.error(err.message);
+    } else {
+      throw err;
+    }
     return runPromise(db, "DROP TABLE books");
   })
   .then(() => {
