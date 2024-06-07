@@ -14,7 +14,7 @@ const result = await runPromise(
   "INSERT INTO books (title) VALUES ('Git入門')",
 );
 console.log(
-  `bookテーブルに本のタイトルを追加しました 自動採番されたID: ${result.lastID}`,
+  `booksテーブルに本のタイトルを追加しました 自動採番されたID: ${result.lastID}`,
 );
 
 const rows = await allPromise(db, "SELECT * FROM books");

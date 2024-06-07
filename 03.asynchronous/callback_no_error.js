@@ -9,7 +9,7 @@ db.run(
 
     db.run("INSERT INTO books (title) VALUES ('Git入門')", function () {
       console.log(
-        `bookテーブルに本のタイトルを追加しました 自動採番されたID: ${this.lastID}`,
+        `booksテーブルに本のタイトルを追加しました 自動採番されたID: ${this.lastID}`,
       );
 
       db.all("SELECT * FROM books", (_, rows) => {
