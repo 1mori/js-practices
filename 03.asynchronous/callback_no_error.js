@@ -19,7 +19,7 @@ db.run(
           console.log("booksテーブルを削除しました");
 
           db.close(() => {
-            console.log("データベースが切断されました");
+            console.log("データベースコネクションが切断されました");
           });
         });
       });

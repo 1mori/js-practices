@@ -26,5 +26,5 @@ runPromise(
     return closePromise(db);
   })
   .then(() => {
-    console.log("データベースが切断されました");
+    console.log("データベースコネクションが切断されました");
   });

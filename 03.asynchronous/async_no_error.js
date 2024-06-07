@@ -24,4 +24,4 @@ await runPromise(db, "DROP TABLE books");
 console.log("booksテーブルを削除しました");
 
 await closePromise(db);
-console.log("データベースが切断されました");
+console.log("データベースコネクションが切断されました");
