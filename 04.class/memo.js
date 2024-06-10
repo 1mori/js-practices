@@ -42,7 +42,6 @@ class MemoApp {
         }
       }
     });
-    await closeDatabase(this.db);
   }
 
   async #list() {
@@ -53,10 +52,8 @@ class MemoApp {
       });
     } catch (err) {
       console.error(`Select error: ${err}`);
-    } finally {
-      await closeDatabase(this.db);
-      this.readlineInterface.close();
     }
+    this.readlineInterface.close();
   }
 
   async #read() {
@@ -84,10 +81,8 @@ class MemoApp {
       }
     } catch (err) {
       console.error(`Select error: ${err}`);
-    } finally {
-      await closeDatabase(this.db);
-      this.readlineInterface.close();
     }
+    this.readlineInterface.close();
   }
 
   async #delete() {
@@ -115,10 +110,8 @@ class MemoApp {
       console.log("Memo deleted.");
     } catch (err) {
       console.error(`Delete error: ${err}`);
-    } finally {
-      await closeDatabase(this.db);
-      this.readlineInterface.close();
     }
+    this.readlineInterface.close();
   }
 
   async run() {
@@ -131,6 +124,7 @@ class MemoApp {
     } else {
       await this.#add();
     }
+    await closeDatabase(this.db);
   }
 }
 
