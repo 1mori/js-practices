@@ -129,7 +129,7 @@ class MemoApp {
     } else if (this.option.d) {
       await this.#delete();
     } else {
-      this.#add();
+      await this.#add();
     }
   }
 }
