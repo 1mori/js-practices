@@ -88,7 +88,7 @@ class MemoApp {
       "Choose a memo you want to see:",
     );
 
-    const selectedMemo = answers.memoToRead;
+    const selectedMemo = answers.memoToRead.text;
     if (selectedMemo) {
       console.log(`\n${selectedMemo}`);
     }
@@ -105,7 +105,7 @@ class MemoApp {
 
     try {
       await runPromise(this.db, "DELETE FROM memo WHERE id = ?", [
-        answers.memoToDelete,
+        answers.memoToDelete.id,
       ]);
       console.log("Memo deleted.");
     } catch (err) {
