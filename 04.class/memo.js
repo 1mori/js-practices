@@ -21,17 +21,17 @@ async function closeDatabase(db) {
 class MemoApp {
   constructor() {
     this.option = minimist(process.argv.slice(2));
-    this.userInput = createInterface({ input: stdin, output: stdout });
+    this.readlineInterface = createInterface({ input: stdin, output: stdout });
     this.db = new sqlite3.Database("./memo.sqlite3");
   }
 
   async #add() {
     let inputText = "";
 
-    this.userInput.on("line", (line) => {
+    this.readlineInterface.on("line", (line) => {
       inputText += `${line}\n`;
     });
-    this.userInput.on("close", async () => {
+    this.readlineInterface.on("close", async () => {
       try {
         await runPromise(this.db, "INSERT INTO memo (text) VALUES (?)", [
           inputText,
@@ -55,7 +55,7 @@ class MemoApp {
       console.error(`Select error: ${err}`);
     } finally {
       await closeDatabase(this.db);
-      this.userInput.close();
+      this.readlineInterface.close();
     }
   }
 
@@ -86,7 +86,7 @@ class MemoApp {
       console.error(`Select error: ${err}`);
     } finally {
       await closeDatabase(this.db);
-      this.userInput.close();
+      this.readlineInterface.close();
     }
   }
 
@@ -117,7 +117,7 @@ class MemoApp {
       console.error(`Delete error: ${err}`);
     } finally {
       await closeDatabase(this.db);
-      this.userInput.close();
+      this.readlineInterface.close();
     }
   }
 
