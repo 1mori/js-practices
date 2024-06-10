@@ -25,7 +25,7 @@ class MemoApp {
     this.db = new sqlite3.Database("./memo.sqlite3");
   }
 
-  #add() {
+  async #add() {
     let inputText = "";
 
     this.userInput.on("line", (line) => {
@@ -40,10 +40,9 @@ class MemoApp {
         if (err instanceof Error && err.code === "SQLITE_CONSTRAINT") {
           console.error(err.message);
         }
-      } finally {
-        await closeDatabase(this.db);
       }
     });
+    await closeDatabase(this.db);
   }
 
   async #list() {
