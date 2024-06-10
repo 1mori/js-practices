@@ -97,20 +97,12 @@ class MemoApp {
 
   async #delete() {
     const memoRows = await getMemoRows(this.db);
-
-    const choices = memoRows.map((row) => ({
-      name: row.text.split("\n")[0],
-      value: row.id,
-    }));
-
-    const answers = await inquirer.prompt([
-      {
-        name: "memoToDelete",
-        type: "list",
-        message: "Choose a memo you want to delete:",
-        choices,
-      },
-    ]);
+    const answers = await chooseMemo(
+      memoRows,
+      "memoToDelete",
+      "list",
+      "Choose a memo you want to delete:",
+    );
 
     try {
       await runPromise(this.db, "DELETE FROM memo WHERE id = ?", [
