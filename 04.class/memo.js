@@ -9,10 +9,19 @@ import inquirer from "inquirer";
 
 import { runPromise, allPromise, closePromise } from "./db_utils.js";
 
+async function closeDatabase(db) {
+  try {
+    await closePromise(db);
+  } catch (err) {
+    if (err instanceof Error) console.error(err);
+    else throw err;
+  }
+}
+
 class MemoApp {
   constructor() {
     this.option = minimist(process.argv.slice(2));
-    this.userInput = readline.createInterface({ stdin, stdout });
+    this.userInput = readline.createInterface({ input: stdin, output: stdout });
     this.db = new sqlite3.Database("./memo.sqlite3");
   }
 
@@ -30,7 +39,7 @@ class MemoApp {
       } catch (err) {
         console.error(`Insert error: ${err}`);
       } finally {
-        await this.#closeDatabase();
+        await closeDatabase(this.db);
       }
     });
   }
@@ -44,7 +53,7 @@ class MemoApp {
     } catch (err) {
       console.error(`Select error: ${err}`);
     } finally {
-      await this.#closeDatabase();
+      await closeDatabase(this.db);
       this.userInput.close();
     }
   }
@@ -75,7 +84,7 @@ class MemoApp {
     } catch (err) {
       console.error(`Select error: ${err}`);
     } finally {
-      await this.#closeDatabase();
+      await closeDatabase(this.db);
       this.userInput.close();
     }
   }
@@ -106,16 +115,8 @@ class MemoApp {
     } catch (err) {
       console.error(`Delete error: ${err}`);
     } finally {
-      await this.#closeDatabase();
+      await closeDatabase(this.db);
       this.userInput.close();
-    }
-  }
-
-  async #closeDatabase() {
-    try {
-      await closePromise(this.db);
-    } catch (err) {
-      console.error(`Close error: ${err}`);
     }
   }
 
