@@ -82,24 +82,16 @@ class MemoApp {
 
   async #read() {
     const memoRows = await getMemoRows(this.db);
+    const answers = await chooseMemo(
+      memoRows,
+      "memoToRead",
+      "list",
+      "Choose a memo you want to see:",
+    );
 
-    const choices = memoRows.map((row) => ({
-      name: row.text.split("\n")[0],
-      value: row.id,
-    }));
-
-    const answers = await inquirer.prompt([
-      {
-        name: "memoToRead",
-        type: "list",
-        message: "Choose a memo you want to read:",
-        choices,
-      },
-    ]);
-
-    const selectedMemo = memoRows.find((row) => row.id === answers.memoToRead);
+    const selectedMemo = answers.memoToRead;
     if (selectedMemo) {
-      console.log("\n" + selectedMemo.text);
+      console.log(`\n${selectedMemo}`);
     }
   }
 
