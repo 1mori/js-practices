@@ -29,7 +29,7 @@ class MemoApp {
     let inputText = "";
 
     this.userInput.on("line", (line) => {
-      inputText += line + "\n";
+      inputText += `${line}\n`;
     });
     this.userInput.on("close", async () => {
       try {
