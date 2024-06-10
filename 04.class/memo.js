@@ -58,16 +58,11 @@ class MemoApp {
   }
 
   async #list() {
-    try {
-      const memoRows = await allPromise(this.db, "SELECT text FROM memo");
-      memoRows.forEach((row) => {
-        console.log(row.text.split("\n")[0]);
-      });
-    } catch (err) {
-      if (err instanceof Error && err.code === "SQLITE_ERROR")
-        console.error(err.message);
-      else throw err;
-    }
+    const memoRows = await getMemoRows(this.db);
+
+    memoRows.forEach((row) => {
+      console.log(row.text.split("\n")[0]);
+    });
     this.readlineInterface.close();
   }
 
