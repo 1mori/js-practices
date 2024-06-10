@@ -32,6 +32,17 @@ async function getMemoRows(db) {
   return memoRows;
 }
 
+async function chooseMemo(memoRows, name, type, message) {
+  const choices = memoRows.map((row) => ({
+    name: row.text.split("\n")[0],
+    value: row.text,
+  }));
+
+  const answers = await inquirer.prompt([{ name, type, message, choices }]);
+
+  return answers;
+}
+
 class MemoApp {
   constructor() {
     this.option = minimist(process.argv.slice(2));
