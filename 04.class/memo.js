@@ -86,8 +86,7 @@ class MemoApp {
       },
     ]);
 
-    const memoIdToRead = answers.memoToRead;
-    const selectedMemo = memoRows.find((row) => row.id === memoIdToRead);
+    const selectedMemo = memoRows.find((row) => row.id === answers.memoToRead);
     if (selectedMemo) {
       console.log("\n" + selectedMemo.text);
     }
@@ -110,10 +109,9 @@ class MemoApp {
       },
     ]);
 
-    const memoIdToDelete = answers.memoToDelete;
     try {
       await runPromise(this.db, "DELETE FROM memo WHERE id = ?", [
-        memoIdToDelete,
+        answers.memoToDelete,
       ]);
       console.log("Memo deleted.");
     } catch (err) {
