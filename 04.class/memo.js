@@ -48,6 +48,10 @@ class MemoApp {
 
   async #read() {
     const memoRows = await getMemoRows(this.db);
+    if (memoRows.length === 0) {
+      console.log("表示するメモがありません。");
+      return;
+    }
     const answers = await chooseMemo(
       memoRows,
       "memoToRead",
@@ -63,6 +67,10 @@ class MemoApp {
 
   async #delete() {
     const memoRows = await getMemoRows(this.db);
+    if (memoRows.length === 0) {
+      console.log("削除するメモがありません。");
+      return;
+    }
     const answers = await chooseMemo(
       memoRows,
       "memoToDelete",
