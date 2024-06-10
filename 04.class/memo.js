@@ -52,7 +52,9 @@ class MemoApp {
         console.log(row.text.split("\n")[0]);
       });
     } catch (err) {
-      console.error(`Select error: ${err}`);
+      if (err instanceof Error && err.code === "SQLITE_ERROR")
+        console.error(err.message);
+      else throw err;
     }
     this.readlineInterface.close();
   }
