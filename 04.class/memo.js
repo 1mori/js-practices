@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import * as readline from "node:readline/promises";
-import { stdin as input, stdout as output } from "node:process";
+import { stdin, stdout } from "node:process";
 
 import minimist from "minimist";
 import sqlite3 from "sqlite3";
@@ -12,7 +12,7 @@ import { runPromise, allPromise, closePromise } from "./db_utils.js";
 class MemoApp {
   constructor() {
     this.option = minimist(process.argv.slice(2));
-    this.userInput = readline.createInterface({ input, output });
+    this.userInput = readline.createInterface({ stdin, stdout });
     this.db = new sqlite3.Database("./memo.sqlite3");
   }
 
