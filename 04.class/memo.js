@@ -37,7 +37,9 @@ class MemoApp {
           inputText,
         ]);
       } catch (err) {
-        console.error(`Insert error: ${err}`);
+        if (err instanceof Error && err.code === "SQLITE_CONSTRAINT") {
+          console.error(err.message);
+        }
       } finally {
         await closeDatabase(this.db);
       }
