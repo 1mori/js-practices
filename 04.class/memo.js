@@ -84,7 +84,7 @@ class MemoApp {
         name: "memoToRead",
         type: "list",
         message: "Choose a memo you want to read:",
-        choices: choices,
+        choices,
       },
     ]);
 
@@ -110,7 +110,7 @@ class MemoApp {
           name: "memoToDelete",
           type: "list",
           message: "Choose a memo you want to delete:",
-          choices: choices,
+          choices,
         },
       ]);
 
