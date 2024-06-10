@@ -97,30 +97,30 @@ class MemoApp {
   }
 
   async #delete() {
+    const memoRows = await getMemoRows(this.db);
+
+    const choices = memoRows.map((row) => ({
+      name: row.text.split("\n")[0],
+      value: row.id,
+    }));
+
+    const answers = await inquirer.prompt([
+      {
+        name: "memoToDelete",
+        type: "list",
+        message: "Choose a memo you want to delete:",
+        choices,
+      },
+    ]);
+
+    const memoIdToDelete = answers.memoToDelete;
     try {
-      const memoRows = await getMemoRows(this.db);
-
-      const choices = memoRows.map((row) => ({
-        name: row.text.split("\n")[0],
-        value: row.id,
-      }));
-
-      const answers = await inquirer.prompt([
-        {
-          name: "memoToDelete",
-          type: "list",
-          message: "Choose a memo you want to delete:",
-          choices,
-        },
-      ]);
-
-      const memoIdToDelete = answers.memoToDelete;
       await runPromise(this.db, "DELETE FROM memo WHERE id = ?", [
         memoIdToDelete,
       ]);
       console.log("Memo deleted.");
     } catch (err) {
-      console.error(`Delete error: ${err}`);
+      if (err instanceof Error) console.error(err.message);
     }
     this.readlineInterface.close();
   }
