@@ -49,7 +49,7 @@ class MemoApp {
     try {
       const rows = await allPromise(this.db, "SELECT text FROM memo");
       rows.forEach((row) => {
-        console.log(row["text"].split("\n")[0]);
+        console.log(row.text.split("\n")[0]);
       });
     } catch (err) {
       console.error(`Select error: ${err}`);
