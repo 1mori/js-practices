@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import * as readline from "node:readline/promises";
+import { createInterface } from "node:readline";
 import { stdin, stdout } from "node:process";
 
 import minimist from "minimist";
@@ -21,7 +21,7 @@ async function closeDatabase(db) {
 class MemoApp {
   constructor() {
     this.option = minimist(process.argv.slice(2));
-    this.userInput = readline.createInterface({ input: stdin, output: stdout });
+    this.userInput = createInterface({ input: stdin, output: stdout });
     this.db = new sqlite3.Database("./memo.sqlite3");
   }
 
