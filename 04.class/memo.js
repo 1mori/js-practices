@@ -19,6 +19,18 @@ async function closeDatabase(db) {
   }
 }
 
+async function getMemoRows(db) {
+  let memoRows;
+  try {
+    memoRows = await allPromise(db, "SELECT id, text FROM memo");
+  } catch (err) {
+    if (err instanceof Error && err.code === "SQLITE_ERROR")
+      console.error(err.message);
+    else throw err;
+  }
+  return memoRows;
+}
+
 class MemoApp {
   constructor() {
     this.option = minimist(process.argv.slice(2));
@@ -60,37 +72,33 @@ class MemoApp {
   }
 
   async #read() {
-    try {
-      const memoRows = await allPromise(this.db, "SELECT id, text FROM memo");
+    const memoRows = await getMemoRows(this.db);
 
-      const choices = memoRows.map((row) => ({
-        name: row.text.split("\n")[0],
-        value: row.id,
-      }));
+    const choices = memoRows.map((row) => ({
+      name: row.text.split("\n")[0],
+      value: row.id,
+    }));
 
-      const answers = await inquirer.prompt([
-        {
-          name: "memoToRead",
-          type: "list",
-          message: "Choose a memo you want to read:",
-          choices: choices,
-        },
-      ]);
+    const answers = await inquirer.prompt([
+      {
+        name: "memoToRead",
+        type: "list",
+        message: "Choose a memo you want to read:",
+        choices: choices,
+      },
+    ]);
 
-      const memoIdToRead = answers.memoToRead;
-      const selectedMemo = memoRows.find((row) => row.id === memoIdToRead);
-      if (selectedMemo) {
-        console.log("\n" + selectedMemo.text);
-      }
-    } catch (err) {
-      console.error(`Select error: ${err}`);
+    const memoIdToRead = answers.memoToRead;
+    const selectedMemo = memoRows.find((row) => row.id === memoIdToRead);
+    if (selectedMemo) {
+      console.log("\n" + selectedMemo.text);
     }
     this.readlineInterface.close();
   }
 
   async #delete() {
     try {
-      const memoRows = await allPromise(this.db, "SELECT id, text FROM memo");
+      const memoRows = await getMemoRows(this.db);
 
       const choices = memoRows.map((row) => ({
         name: row.text.split("\n")[0],
