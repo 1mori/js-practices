@@ -5,42 +5,9 @@ import { stdin, stdout } from "node:process";
 
 import minimist from "minimist";
 import sqlite3 from "sqlite3";
-import inquirer from "inquirer";
 
-import { runPromise, allPromise, closePromise } from "./db_utils.js";
-
-async function closeDatabase(db) {
-  try {
-    await closePromise(db);
-  } catch (err) {
-    if (err instanceof Error && err.code === "SQLITE_MISUSE")
-      console.error(err.message);
-    else throw err;
-  }
-}
-
-async function getMemoRows(db) {
-  let memoRows;
-  try {
-    memoRows = await allPromise(db, "SELECT text FROM memo");
-  } catch (err) {
-    if (err instanceof Error && err.code === "SQLITE_ERROR")
-      console.error(err.message);
-    else throw err;
-  }
-  return memoRows;
-}
-
-async function chooseMemo(memoRows, name, type, message) {
-  const choices = memoRows.map((row) => ({
-    name: row.text.split("\n")[0],
-    value: row.text,
-  }));
-
-  const answers = await inquirer.prompt([{ name, type, message, choices }]);
-
-  return answers;
-}
+import { runPromise } from "./db_utils.js";
+import { closeDatabase, getMemoRows, chooseMemo } from "./memo_utils.js";
 
 class MemoApp {
   constructor() {
