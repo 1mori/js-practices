@@ -23,7 +23,7 @@ async function closeDatabase(db) {
 async function getMemoRows(db) {
   let memoRows;
   try {
-    memoRows = await allPromise(db, "SELECT * FROM memo");
+    memoRows = await allPromise(db, "SELECT text FROM memo");
   } catch (err) {
     if (err instanceof Error && err.code === "SQLITE_ERROR")
       console.error(err.message);
