@@ -47,8 +47,8 @@ class MemoApp {
 
   async #list() {
     try {
-      const rows = await allPromise(this.db, "SELECT text FROM memo");
-      rows.forEach((row) => {
+      const memoRows = await allPromise(this.db, "SELECT text FROM memo");
+      memoRows.forEach((row) => {
         console.log(row.text.split("\n")[0]);
       });
     } catch (err) {
@@ -59,9 +59,9 @@ class MemoApp {
 
   async #read() {
     try {
-      const rows = await allPromise(this.db, "SELECT id, text FROM memo");
+      const memoRows = await allPromise(this.db, "SELECT id, text FROM memo");
 
-      const choices = rows.map((row) => ({
+      const choices = memoRows.map((row) => ({
         name: row.text.split("\n")[0],
         value: row.id,
       }));
@@ -76,7 +76,7 @@ class MemoApp {
       ]);
 
       const memoIdToRead = answers.memoToRead;
-      const selectedMemo = rows.find((row) => row.id === memoIdToRead);
+      const selectedMemo = memoRows.find((row) => row.id === memoIdToRead);
       if (selectedMemo) {
         console.log("\n" + selectedMemo.text);
       }
@@ -88,9 +88,9 @@ class MemoApp {
 
   async #delete() {
     try {
-      const rows = await allPromise(this.db, "SELECT id, text FROM memo");
+      const memoRows = await allPromise(this.db, "SELECT id, text FROM memo");
 
-      const choices = rows.map((row) => ({
+      const choices = memoRows.map((row) => ({
         name: row.text.split("\n")[0],
         value: row.id,
       }));
