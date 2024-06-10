@@ -8,6 +8,7 @@ import sqlite3 from "sqlite3";
 import inquirer from "inquirer";
 
 import { runPromise, allPromise, closePromise } from "./db_utils.js";
+import { resolve } from "node:path";
 
 async function closeDatabase(db) {
   try {
@@ -34,27 +35,30 @@ async function getMemoRows(db) {
 class MemoApp {
   constructor() {
     this.option = minimist(process.argv.slice(2));
-    this.readlineInterface = createInterface({ input: stdin, output: stdout });
     this.db = new sqlite3.Database("./memo.sqlite3");
   }
 
   async #add() {
     let inputText = "";
+    const readlineInterface = createInterface({ input: stdin, output: stdout });
 
-    this.readlineInterface.on("line", (line) => {
-      inputText += `${line}\n`;
+    await new Promise((resolve) => {
+      readlineInterface.on("line", (line) => {
+        inputText += `${line}\n`;
+      });
+
+      readlineInterface.on("close", resolve);
     });
-    this.readlineInterface.on("close", async () => {
-      try {
-        await runPromise(this.db, "INSERT INTO memo (text) VALUES (?)", [
-          inputText,
-        ]);
-      } catch (err) {
-        if (err instanceof Error && err.code === "SQLITE_CONSTRAINT") {
-          console.error(err.message);
-        }
+
+    try {
+      await runPromise(this.db, "INSERT INTO memo (text) VALUES (?)", [
+        inputText,
+      ]);
+    } catch (err) {
+      if (err instanceof Error && err.code === "SQLITE_CONSTRAINT") {
+        console.error(err.message);
       }
-    });
+    }
   }
 
   async #list() {
@@ -63,7 +67,6 @@ class MemoApp {
     memoRows.forEach((row) => {
       console.log(row.text.split("\n")[0]);
     });
-    this.readlineInterface.close();
   }
 
   async #read() {
@@ -88,7 +91,6 @@ class MemoApp {
     if (selectedMemo) {
       console.log("\n" + selectedMemo.text);
     }
-    this.readlineInterface.close();
   }
 
   async #delete() {
@@ -117,7 +119,6 @@ class MemoApp {
     } catch (err) {
       if (err instanceof Error) console.error(err.message);
     }
-    this.readlineInterface.close();
   }
 
   async run() {
