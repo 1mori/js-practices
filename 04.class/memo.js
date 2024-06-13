@@ -61,18 +61,8 @@ class MemoApp {
       "Choose a memo you want to delete:",
     );
 
-    try {
-      await promise.run(this.db, "DELETE FROM memo WHERE id = ?", [
-        answer.memoToDelete.id,
-      ]);
-      console.log("Memo deleted.");
-    } catch (err) {
-      if (err instanceof Error) {
-        console.error(err.message);
-      } else {
-        throw err;
-      }
-    }
+    const id = answer.memoToDelete.id;
+    this.memoDatabase.delete(id);
   }
 
   async #choose(memoRows, name, type, message) {
@@ -139,6 +129,19 @@ class memoDatabase {
       await promise.run(this.db, "INSERT INTO memo (text) VALUES (?)", [input]);
     } catch (err) {
       if (err instanceof Error && err.code === "SQLITE_CONSTRAINT") {
+        console.error(err.message);
+      } else {
+        throw err;
+      }
+    }
+  }
+
+  async delete(id) {
+    try {
+      await promise.run(this.db, "DELETE FROM memo WHERE id = ?", [id]);
+      console.log("Memo deleted.");
+    } catch (err) {
+      if (err instanceof Error) {
         console.error(err.message);
       } else {
         throw err;
