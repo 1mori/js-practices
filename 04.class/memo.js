@@ -34,7 +34,8 @@ class MemoApp {
       console.log("表示するメモがありません。");
       return;
     }
-    const answer = await this.#chooseMemo(
+
+    const answer = await this.#choose(
       memoRows,
       "memoToRead",
       "list",
@@ -53,7 +54,7 @@ class MemoApp {
       console.log("削除するメモがありません。");
       return;
     }
-    const answer = await this.#chooseMemo(
+    const answer = await this.#choose(
       memoRows,
       "memoToDelete",
       "list",
@@ -74,7 +75,7 @@ class MemoApp {
     }
   }
 
-  async #chooseMemo(memoRows, name, type, message) {
+  async #choose(memoRows, name, type, message) {
     const choices = memoRows.map((memoRow) => ({
       name: memoRow.text.split("\n")[0],
       value: memoRow,
