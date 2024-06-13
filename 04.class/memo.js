@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+import { createInterface } from "readline";
+
 import minimist from "minimist";
 import sqlite3 from "sqlite3";
 import inquirer from "inquirer";
@@ -165,7 +167,7 @@ class memoDatabase {
 
 class ReadlineInterface {
   constructor() {
-    this.readlineInterface = readline.createInterface({
+    this.readlineInterface = createInterface({
       input: process.stdin,
       output: process.stdout,
     });
