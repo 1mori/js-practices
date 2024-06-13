@@ -54,7 +54,7 @@ class MemoApp {
       console.log("表示するメモがありません。");
       return;
     }
-    const answer = await chooseMemo(
+    const answer = await this.#chooseMemo(
       memoRows,
       "memoToRead",
       "list",
@@ -73,7 +73,7 @@ class MemoApp {
       console.log("削除するメモがありません。");
       return;
     }
-    const answer = await chooseMemo(
+    const answer = await this.#chooseMemo(
       memoRows,
       "memoToDelete",
       "list",
@@ -92,6 +92,17 @@ class MemoApp {
         throw err;
       }
     }
+  }
+
+  async #chooseMemo(memoRows, name, type, message) {
+    const choices = memoRows.map((memoRow) => ({
+      name: memoRow.text.split("\n")[0],
+      value: memoRow,
+    }));
+
+    const answer = await inquirer.prompt([{ name, type, message, choices }]);
+
+    return answer;
   }
 
   async run() {
