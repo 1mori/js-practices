@@ -16,16 +16,8 @@ class MemoApp {
   }
 
   async #add() {
-    let inputText = "";
     const readlineInterface = createInterface({ input: stdin, output: stdout });
-
-    await new Promise((resolve) => {
-      readlineInterface.on("line", (line) => {
-        inputText += `${line}\n`;
-      });
-
-      readlineInterface.on("close", resolve);
-    });
+    const inputText = await inputMemo(readlineInterface);
 
     try {
       await promise.run(this.db, "INSERT INTO memo (text) VALUES (?)", [
@@ -164,6 +156,18 @@ class memoDatabase {
       }
     }
   }
+}
+
+async function inputMemo(readlineInterface) {
+  let inputText = "";
+  await new Promise((resolve) => {
+    readlineInterface.on("line", (line) => {
+      inputText += `${line}\n`;
+    });
+
+    readlineInterface.on("close", resolve);
+  });
+  return inputText;
 }
 
 const promise = new dbPromise();
