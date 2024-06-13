@@ -138,43 +138,32 @@ class memoDatabase {
       }
     }
   }
-}
 
-async function closeDatabase(db) {
-  try {
-    await promise.close(db);
-  } catch (err) {
-    if (err instanceof Error && err.code === "SQLITE_MISUSE") {
-      console.error(err.message);
-    } else {
-      throw err;
+  async getMemoRows(db) {
+    let memoRows;
+    try {
+      memoRows = await promise.all(db, "SELECT id, text FROM memo");
+    } catch (err) {
+      if (err instanceof Error && err.code === "SQLITE_ERROR") {
+        console.error(err.message);
+      } else {
+        throw err;
+      }
+    }
+    return memoRows;
+  }
+
+  async close(db) {
+    try {
+      await promise.close(db);
+    } catch (err) {
+      if (err instanceof Error && err.code === "SQLITE_MISUSE") {
+        console.error(err.message);
+      } else {
+        throw err;
+      }
     }
   }
-}
-
-async function getMemoRows(db) {
-  let memoRows;
-  try {
-    memoRows = await promise.all(db, "SELECT id, text FROM memo");
-  } catch (err) {
-    if (err instanceof Error && err.code === "SQLITE_ERROR") {
-      console.error(err.message);
-    } else {
-      throw err;
-    }
-  }
-  return memoRows;
-}
-
-async function chooseMemo(memoRows, name, type, message) {
-  const choices = memoRows.map((memoRow) => ({
-    name: memoRow.text.split("\n")[0],
-    value: memoRow,
-  }));
-
-  const answer = await inquirer.prompt([{ name, type, message, choices }]);
-
-  return answer;
 }
 
 const promise = new dbPromise();
