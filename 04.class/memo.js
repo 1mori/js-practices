@@ -54,14 +54,14 @@ class MemoApp {
       console.log("表示するメモがありません。");
       return;
     }
-    const answers = await chooseMemo(
+    const answer = await chooseMemo(
       memoRows,
       "memoToRead",
       "list",
       "Choose a memo you want to see:",
     );
 
-    const selectedText = answers.memoToRead.text;
+    const selectedText = answer.memoToRead.text;
     if (selectedText) {
       console.log(`\n${selectedText}`);
     }
@@ -73,7 +73,7 @@ class MemoApp {
       console.log("削除するメモがありません。");
       return;
     }
-    const answers = await chooseMemo(
+    const answer = await chooseMemo(
       memoRows,
       "memoToDelete",
       "list",
@@ -82,7 +82,7 @@ class MemoApp {
 
     try {
       await promise.run(this.db, "DELETE FROM memo WHERE id = ?", [
-        answers.memoToDelete.id,
+        answer.memoToDelete.id,
       ]);
       console.log("Memo deleted.");
     } catch (err) {
@@ -140,9 +140,9 @@ async function chooseMemo(memoRows, name, type, message) {
     value: memoRow,
   }));
 
-  const answers = await inquirer.prompt([{ name, type, message, choices }]);
+  const answer = await inquirer.prompt([{ name, type, message, choices }]);
 
-  return answers;
+  return answer;
 }
 
 const promise = new dbPromise();
