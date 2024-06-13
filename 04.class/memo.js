@@ -185,4 +185,4 @@ class readlineInterface {
   }
 }
 
-const app = new MemoApp().run();
+new MemoApp().run();
