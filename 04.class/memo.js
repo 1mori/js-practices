@@ -43,8 +43,8 @@ class MemoApp {
   async #list() {
     const memoRows = await getMemoRows(this.db);
 
-    memoRows.forEach((row) => {
-      console.log(row.text.split("\n")[0]);
+    memoRows.forEach((memoRow) => {
+      console.log(memoRow.text.split("\n")[0]);
     });
   }
 
@@ -135,9 +135,9 @@ async function getMemoRows(db) {
 }
 
 async function chooseMemo(memoRows, name, type, message) {
-  const choices = memoRows.map((row) => ({
-    name: row.text.split("\n")[0],
-    value: row,
+  const choices = memoRows.map((memoRow) => ({
+    name: memoRow.text.split("\n")[0],
+    value: memoRow,
   }));
 
   const answers = await inquirer.prompt([{ name, type, message, choices }]);
