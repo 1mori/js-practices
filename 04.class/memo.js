@@ -41,10 +41,10 @@ class MemoApp {
   }
 
   async #list() {
-    const memoRows = await getMemoRows(this.db);
+    const memos = await getMemoRows(this.db);
 
-    memoRows.forEach((memoRow) => {
-      console.log(memoRow.text.split("\n")[0]);
+    memos.forEach((memo) => {
+      console.log(memo.text.split("\n")[0]);
     });
   }
 
