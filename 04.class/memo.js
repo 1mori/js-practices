@@ -6,8 +6,8 @@ import { stdin, stdout } from "node:process";
 import minimist from "minimist";
 import sqlite3 from "sqlite3";
 
-import { runPromise } from "./db_utils.js";
 import { closeDatabase, getMemoRows, chooseMemo } from "./memo_utils.js";
+import dbPromise from "./db_utils.js";
 
 class MemoApp {
   constructor() {
@@ -28,7 +28,7 @@ class MemoApp {
     });
 
     try {
-      await runPromise(this.db, "INSERT INTO memo (text) VALUES (?)", [
+      await promise.run(this.db, "INSERT INTO memo (text) VALUES (?)", [
         inputText,
       ]);
     } catch (err) {
@@ -79,7 +79,7 @@ class MemoApp {
     );
 
     try {
-      await runPromise(this.db, "DELETE FROM memo WHERE id = ?", [
+      await promise.run(this.db, "DELETE FROM memo WHERE id = ?", [
         answers.memoToDelete.id,
       ]);
       console.log("Memo deleted.");
@@ -102,5 +102,6 @@ class MemoApp {
   }
 }
 
+const promise = new dbPromise();
 const app = new MemoApp();
 app.run();
