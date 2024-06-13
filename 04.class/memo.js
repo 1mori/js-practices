@@ -77,6 +77,7 @@ class MemoApp {
   }
 
   async run() {
+    await this.memoDatabase.ensureTableExists();
     if (this.option.l) {
       await this.#list();
     } else if (this.option.r) {
@@ -86,20 +87,20 @@ class MemoApp {
     } else {
       await this.#add();
     }
-    await closeDatabase(this.db);
+    await this.memoDatabase.close(this.db);
   }
 }
 
 class memoDatabase {
   constructor() {
     this.db = new sqlite3.Database("./memo.sqlite3");
-    this.createTable();
   }
-  async createTable() {
+
+  async ensureTableExists() {
     try {
       await promise.run(
         this.db,
-        "CREATE TABLE IF NOT EXISTS memos (id INTEGER PRIMARY KEY AUTOINCREMENT, text TEXT NOT NULL)",
+        "CREATE TABLE IF NOT EXISTS memo (id INTEGER PRIMARY KEY AUTOINCREMENT, text TEXT NOT NULL)",
       );
     } catch (err) {
       if (err instanceof Error) {
