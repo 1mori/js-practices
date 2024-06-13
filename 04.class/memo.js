@@ -100,7 +100,7 @@ class memoDatabase {
     try {
       await promise.run(
         this.db,
-        "CREATE TABLE IF NOT EXISTS memo (id INTEGER PRIMARY KEY AUTOINCREMENT, text TEXT NOT NULL)",
+        "CREATE TABLE IF NOT EXISTS memos (id INTEGER PRIMARY KEY AUTOINCREMENT, text TEXT NOT NULL)",
       );
     } catch (err) {
       if (err instanceof Error) {
@@ -114,7 +114,7 @@ class memoDatabase {
   async all() {
     let memoRows;
     try {
-      memoRows = await promise.all(this.db, "SELECT id, text FROM memo");
+      memoRows = await promise.all(this.db, "SELECT id, text FROM memos");
     } catch (err) {
       if (err instanceof Error && err.code === "SQLITE_ERROR") {
         console.error(err.message);
@@ -127,7 +127,9 @@ class memoDatabase {
 
   async insert(input) {
     try {
-      await promise.run(this.db, "INSERT INTO memo (text) VALUES (?)", [input]);
+      await promise.run(this.db, "INSERT INTO memos (text) VALUES (?)", [
+        input,
+      ]);
     } catch (err) {
       if (err instanceof Error && err.code === "SQLITE_CONSTRAINT") {
         console.error(err.message);
@@ -139,7 +141,7 @@ class memoDatabase {
 
   async delete(id) {
     try {
-      await promise.run(this.db, "DELETE FROM memo WHERE id = ?", [id]);
+      await promise.run(this.db, "DELETE FROM memos WHERE id = ?", [id]);
       console.log("Memo deleted.");
     } catch (err) {
       if (err instanceof Error) {
