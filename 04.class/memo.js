@@ -151,7 +151,7 @@ class memoDatabase {
 
   async close() {
     try {
-      await promise.close(db);
+      await promise.close(this.db);
     } catch (err) {
       if (err instanceof Error && err.code === "SQLITE_MISUSE") {
         console.error(err.message);
