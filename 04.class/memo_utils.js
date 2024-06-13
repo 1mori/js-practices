@@ -6,9 +6,11 @@ export async function closeDatabase(db) {
   try {
     await closePromise(db);
   } catch (err) {
-    if (err instanceof Error && err.code === "SQLITE_MISUSE")
+    if (err instanceof Error && err.code === "SQLITE_MISUSE") {
       console.error(err.message);
-    else throw err;
+    } else {
+      throw err;
+    }
   }
 }
 
@@ -17,9 +19,11 @@ export async function getMemoRows(db) {
   try {
     memoRows = await allPromise(db, "SELECT id, text FROM memo");
   } catch (err) {
-    if (err instanceof Error && err.code === "SQLITE_ERROR")
+    if (err instanceof Error && err.code === "SQLITE_ERROR") {
       console.error(err.message);
-    else throw err;
+    } else {
+      throw err;
+    }
   }
   return memoRows;
 }
