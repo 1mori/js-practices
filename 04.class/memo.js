@@ -118,6 +118,7 @@ class MemoApp {
     await closeDatabase(this.db);
   }
 }
+
 class memoDatabase {
   constructor() {
     this.db = new sqlite3.Database("./memo.sqlite3");
