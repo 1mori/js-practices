@@ -12,7 +12,7 @@ import dbPromise from "./db_utils.js";
 class MemoApp {
   constructor() {
     this.option = minimist(process.argv.slice(2));
-    this.db = new sqlite3.Database("./memo.sqlite3");
+    this.memoDatabase = new memoDatabase();
   }
 
   async #add() {
@@ -105,6 +105,26 @@ class MemoApp {
       await this.#add();
     }
     await closeDatabase(this.db);
+  }
+}
+class memoDatabase {
+  constructor() {
+    this.db = new sqlite3.Database("./memo.sqlite3");
+    this.createTable();
+  }
+  async createTable() {
+    try {
+      await promise.run(
+        this.db,
+        "CREATE TABLE IF NOT EXISTS memos (id INTEGER PRIMARY KEY AUTOINCREMENT, text TEXT NOT NULL)",
+      );
+    } catch (err) {
+      if (err instanceof Error) {
+        console.error(err.message);
+      } else {
+        throw err;
+      }
+    }
   }
 }
 
