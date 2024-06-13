@@ -16,13 +16,10 @@ class MemoApp {
   }
 
   async #add() {
-    const readlineInterface = createInterface({ input: stdin, output: stdout });
-    const inputText = await inputMemo(readlineInterface);
+    const input = await new readlineInterface().inputText();
 
     try {
-      await promise.run(this.db, "INSERT INTO memo (text) VALUES (?)", [
-        inputText,
-      ]);
+      await promise.run(this.db, "INSERT INTO memo (text) VALUES (?)", [input]);
     } catch (err) {
       if (err instanceof Error && err.code === "SQLITE_CONSTRAINT") {
         console.error(err.message);
@@ -158,16 +155,23 @@ class memoDatabase {
   }
 }
 
-async function inputMemo(readlineInterface) {
-  let inputText = "";
-  await new Promise((resolve) => {
-    readlineInterface.on("line", (line) => {
-      inputText += `${line}\n`;
-    });
+class readlineInterface {
+  constructor() {
+    this.readlineInterface = createInterface({ input: stdin, output: stdout });
+  }
 
-    readlineInterface.on("close", resolve);
-  });
-  return inputText;
+  inputText() {
+    return new Promise((resolve) => {
+      let text = "";
+      this.readlineInterface.on("line", (line) => {
+        text += `${line}\n`;
+      });
+
+      this.readlineInterface.on("close", () => {
+        resolve(text);
+      });
+    });
+  }
 }
 
 const promise = new dbPromise();
