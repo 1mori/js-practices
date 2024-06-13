@@ -1,4 +1,4 @@
-class dbPromise {
+class DbPromise {
   run(db, query, params = []) {
     return new Promise((resolve, reject) => {
       db.run(query, params, function (err) {
@@ -36,4 +36,4 @@ class dbPromise {
   }
 }
 
-export default dbPromise;
+export default DbPromise;

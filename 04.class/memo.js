@@ -4,7 +4,7 @@ import minimist from "minimist";
 import sqlite3 from "sqlite3";
 import inquirer from "inquirer";
 
-import dbPromise from "./db_utils.js";
+import DbPromise from "./db_utils.js";
 
 class MemoApp {
   constructor() {
@@ -13,7 +13,7 @@ class MemoApp {
   }
 
   async #add() {
-    const input = await new readlineInterface().inputText();
+    const input = await new ReadlineInterface().inputText();
     this.memoDatabase.insert(input);
   }
 
@@ -91,7 +91,7 @@ class MemoApp {
 class memoDatabase {
   constructor() {
     this.db = new sqlite3.Database("./memo.sqlite3");
-    this.promise = new dbPromise();
+    this.promise = new DbPromise();
   }
 
   async ensureTableExists() {
@@ -163,7 +163,7 @@ class memoDatabase {
   }
 }
 
-class readlineInterface {
+class ReadlineInterface {
   constructor() {
     this.readlineInterface = readline.createInterface({
       input: process.stdin,
