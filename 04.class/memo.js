@@ -34,6 +34,8 @@ class MemoApp {
     } catch (err) {
       if (err instanceof Error && err.code === "SQLITE_CONSTRAINT") {
         console.error(err.message);
+      } else {
+        throw err;
       }
     }
   }
@@ -84,7 +86,11 @@ class MemoApp {
       ]);
       console.log("Memo deleted.");
     } catch (err) {
-      if (err instanceof Error) console.error(err.message);
+      if (err instanceof Error) {
+        console.error(err.message);
+      } else {
+        throw err;
+      }
     }
   }
 
