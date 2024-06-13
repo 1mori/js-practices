@@ -185,5 +185,4 @@ class readlineInterface {
 }
 
 const promise = new dbPromise();
-const app = new MemoApp();
-app.run();
+const app = new MemoApp().run();
