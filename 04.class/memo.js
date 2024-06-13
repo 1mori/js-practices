@@ -21,7 +21,7 @@ class MemoApp {
   }
 
   async #list() {
-    const memos = await getMemoRows(this.db);
+    const memos = await this.memoDatabase.all();
 
     memos.forEach((memo) => {
       console.log(memo.text.split("\n")[0]);
@@ -29,7 +29,7 @@ class MemoApp {
   }
 
   async #read() {
-    const memoRows = await getMemoRows(this.db);
+    const memoRows = await this.memoDatabase.all();
     if (memoRows.length === 0) {
       console.log("表示するメモがありません。");
       return;
@@ -48,7 +48,7 @@ class MemoApp {
   }
 
   async #delete() {
-    const memoRows = await getMemoRows(this.db);
+    const memoRows = await this.memoDatabase.all();
     if (memoRows.length === 0) {
       console.log("削除するメモがありません。");
       return;
@@ -119,10 +119,10 @@ class memoDatabase {
     }
   }
 
-  async getMemoRows(db) {
+  async all() {
     let memoRows;
     try {
-      memoRows = await promise.all(db, "SELECT id, text FROM memo");
+      memoRows = await promise.all(this.db, "SELECT id, text FROM memo");
     } catch (err) {
       if (err instanceof Error && err.code === "SQLITE_ERROR") {
         console.error(err.message);
