@@ -17,16 +17,7 @@ class MemoApp {
 
   async #add() {
     const input = await new readlineInterface().inputText();
-
-    try {
-      await promise.run(this.db, "INSERT INTO memo (text) VALUES (?)", [input]);
-    } catch (err) {
-      if (err instanceof Error && err.code === "SQLITE_CONSTRAINT") {
-        console.error(err.message);
-      } else {
-        throw err;
-      }
-    }
+    this.memoDatabase.insert(input);
   }
 
   async #list() {
@@ -142,7 +133,19 @@ class memoDatabase {
     return memoRows;
   }
 
-  async close(db) {
+  async insert(input) {
+    try {
+      await promise.run(this.db, "INSERT INTO memo (text) VALUES (?)", [input]);
+    } catch (err) {
+      if (err instanceof Error && err.code === "SQLITE_CONSTRAINT") {
+        console.error(err.message);
+      } else {
+        throw err;
+      }
+    }
+  }
+
+  async close() {
     try {
       await promise.close(db);
     } catch (err) {
