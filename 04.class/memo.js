@@ -94,11 +94,12 @@ class MemoApp {
 class memoDatabase {
   constructor() {
     this.db = new sqlite3.Database("./memo.sqlite3");
+    this.promise = new dbPromise();
   }
 
   async ensureTableExists() {
     try {
-      await promise.run(
+      await this.promise.run(
         this.db,
         "CREATE TABLE IF NOT EXISTS memos (id INTEGER PRIMARY KEY AUTOINCREMENT, text TEXT NOT NULL)",
       );
@@ -114,7 +115,7 @@ class memoDatabase {
   async all() {
     let memoRows;
     try {
-      memoRows = await promise.all(this.db, "SELECT id, text FROM memos");
+      memoRows = await this.promise.all(this.db, "SELECT id, text FROM memos");
     } catch (err) {
       if (err instanceof Error && err.code === "SQLITE_ERROR") {
         console.error(err.message);
@@ -127,7 +128,7 @@ class memoDatabase {
 
   async insert(input) {
     try {
-      await promise.run(this.db, "INSERT INTO memos (text) VALUES (?)", [
+      await this.promise.run(this.db, "INSERT INTO memos (text) VALUES (?)", [
         input,
       ]);
     } catch (err) {
@@ -141,7 +142,7 @@ class memoDatabase {
 
   async delete(id) {
     try {
-      await promise.run(this.db, "DELETE FROM memos WHERE id = ?", [id]);
+      await this.promise.run(this.db, "DELETE FROM memos WHERE id = ?", [id]);
       console.log("Memo deleted.");
     } catch (err) {
       if (err instanceof Error) {
@@ -154,7 +155,7 @@ class memoDatabase {
 
   async close() {
     try {
-      await promise.close(this.db);
+      await this.promise.close(this.db);
     } catch (err) {
       if (err instanceof Error && err.code === "SQLITE_MISUSE") {
         console.error(err.message);
@@ -184,5 +185,4 @@ class readlineInterface {
   }
 }
 
-const promise = new dbPromise();
 const app = new MemoApp().run();
