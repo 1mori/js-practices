@@ -28,14 +28,14 @@ class MemoApp {
   }
 
   async #read() {
-    const memoRows = await this.memoDatabase.all();
-    if (memoRows.length === 0) {
+    const memos = await this.memoDatabase.all();
+    if (memos.length === 0) {
       console.log("表示するメモがありません。");
       return;
     }
 
     const answer = await this.#choose(
-      memoRows,
+      memos,
       "memoToRead",
       "list",
       "Choose a memo you want to see:",
@@ -48,13 +48,13 @@ class MemoApp {
   }
 
   async #delete() {
-    const memoRows = await this.memoDatabase.all();
-    if (memoRows.length === 0) {
+    const memos = await this.memoDatabase.all();
+    if (memos.length === 0) {
       console.log("削除するメモがありません。");
       return;
     }
     const answer = await this.#choose(
-      memoRows,
+      memos,
       "memoToDelete",
       "list",
       "Choose a memo you want to delete:",
@@ -64,8 +64,8 @@ class MemoApp {
     this.memoDatabase.delete(id);
   }
 
-  async #choose(memoRows, name, type, message) {
-    const choices = memoRows.map((memoRow) => ({
+  async #choose(memos, name, type, message) {
+    const choices = memos.map((memoRow) => ({
       name: memoRow.text.split("\n")[0],
       value: memoRow,
     }));
@@ -112,9 +112,9 @@ class memoDatabase {
   }
 
   async all() {
-    let memoRows;
+    let memos;
     try {
-      memoRows = await this.promise.all(this.db, "SELECT id, text FROM memos");
+      memos = await this.promise.all(this.db, "SELECT id, text FROM memos");
     } catch (err) {
       if (err instanceof Error && err.code === "SQLITE_ERROR") {
         console.error(err.message);
@@ -122,7 +122,7 @@ class memoDatabase {
         throw err;
       }
     }
-    return memoRows;
+    return memos;
   }
 
   async insert(input) {
