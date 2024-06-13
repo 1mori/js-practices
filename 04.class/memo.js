@@ -61,9 +61,9 @@ class MemoApp {
       "Choose a memo you want to see:",
     );
 
-    const selectedMemo = answers.memoToRead.text;
-    if (selectedMemo) {
-      console.log(`\n${selectedMemo}`);
+    const selectedText = answers.memoToRead.text;
+    if (selectedText) {
+      console.log(`\n${selectedText}`);
     }
   }
 
