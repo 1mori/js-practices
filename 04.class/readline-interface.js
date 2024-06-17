@@ -6,20 +6,21 @@ class ReadlineInterface {
       input: process.stdin,
       output: process.stdout,
     });
+
+    this.text = "";
   }
 
   inputText() {
     return new Promise((resolve) => {
-      let text = "";
       this.readlineInterface.on("line", (line) => {
-        text += `${line}\n`;
+        this.text += `${line}\n`;
       });
 
       this.readlineInterface.on("close", () => {
-        if (text.endsWith("\n")) {
-          text = text.slice(0, -1);
+        if (this.text.endsWith("\n")) {
+          this.text = this.text.slice(0, -1);
         }
-        resolve(text);
+        resolve(this.text);
       });
     });
   }
