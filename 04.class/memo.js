@@ -1,11 +1,10 @@
 #!/usr/bin/env node
 
-import { createInterface } from "readline";
-
 import minimist from "minimist";
 import inquirer from "inquirer";
 
-import MemoDatabase from "./memo-database";
+import MemoDatabase from "./memo-database.js";
+import ReadlineInterface from "./readline-interface.js";
 
 class MemoApp {
   constructor() {
@@ -86,28 +85,6 @@ class MemoApp {
       await this.#add();
     }
     await this.memoDatabase.close(this.db);
-  }
-}
-
-class ReadlineInterface {
-  constructor() {
-    this.readlineInterface = createInterface({
-      input: process.stdin,
-      output: process.stdout,
-    });
-  }
-
-  inputText() {
-    return new Promise((resolve) => {
-      let text = "";
-      this.readlineInterface.on("line", (line) => {
-        text += `${line}\n`;
-      });
-
-      this.readlineInterface.on("close", () => {
-        resolve(text);
-      });
-    });
   }
 }
 
