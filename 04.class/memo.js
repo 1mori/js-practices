@@ -11,7 +11,7 @@ import DbPromise from "./db_utils.js";
 class MemoApp {
   constructor() {
     this.option = minimist(process.argv.slice(2));
-    this.memoDatabase = new memoDatabase();
+    this.memoDatabase = new MemoDatabase();
   }
 
   async #add() {
@@ -90,7 +90,7 @@ class MemoApp {
   }
 }
 
-class memoDatabase {
+class MemoDatabase {
   constructor() {
     this.db = new sqlite3.Database("./memo.sqlite3");
     this.promise = new DbPromise();
