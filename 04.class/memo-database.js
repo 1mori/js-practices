@@ -26,7 +26,10 @@ class MemoDatabase {
   async all() {
     let memos;
     try {
-      memos = await this.promise.all(this.db, "SELECT id, text FROM memos");
+      memos = await this.promise.all(
+        this.db,
+        "SELECT id, text FROM memos ORDER BY id",
+      );
     } catch (err) {
       if (err instanceof Error && err.code === "SQLITE_ERROR") {
         console.error(err.message);
