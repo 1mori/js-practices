@@ -12,6 +12,20 @@ class MemoApp {
     this.memoDatabase = new MemoDatabase();
   }
 
+  async run() {
+    await this.memoDatabase.ensureTableExists();
+    if (this.option.l) {
+      await this.#list();
+    } else if (this.option.r) {
+      await this.#read();
+    } else if (this.option.d) {
+      await this.#delete();
+    } else {
+      await this.#add();
+    }
+    await this.memoDatabase.close(this.db);
+  }
+
   async #add() {
     const input = await new ReadlineInterface().inputText();
     this.memoDatabase.insert(input);
@@ -71,20 +85,6 @@ class MemoApp {
     const answer = await inquirer.prompt([{ name, type, message, choices }]);
 
     return answer;
-  }
-
-  async run() {
-    await this.memoDatabase.ensureTableExists();
-    if (this.option.l) {
-      await this.#list();
-    } else if (this.option.r) {
-      await this.#read();
-    } else if (this.option.d) {
-      await this.#delete();
-    } else {
-      await this.#add();
-    }
-    await this.memoDatabase.close(this.db);
   }
 }
 
