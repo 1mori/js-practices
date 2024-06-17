@@ -16,6 +16,9 @@ class ReadlineInterface {
       });
 
       this.readlineInterface.on("close", () => {
+        if (text.endsWith("\n")) {
+          text = text.slice(0, -1);
+        }
         resolve(text);
       });
     });
