@@ -57,12 +57,10 @@ class MemoApp {
 
     const answer = await this.#choose(
       memos,
-      "memoToRead",
-      "list",
       "Choose a memo you want to see:",
     );
 
-    const selectedText = answer.memoToRead.text;
+    const selectedText = answer.memo.text;
     if (selectedText) {
       console.log(`\n${selectedText}`);
     }
@@ -76,22 +74,22 @@ class MemoApp {
     }
     const answer = await this.#choose(
       memos,
-      "memoToDelete",
-      "list",
       "Choose a memo you want to delete:",
     );
 
-    const id = answer.memoToDelete.id;
+    const id = answer.memo.id;
     this.memoDatabase.delete(id);
   }
 
-  async #choose(memos, name, type, message) {
+  async #choose(memos, message) {
     const choices = memos.map((memoRow) => ({
       name: memoRow.text.split("\n")[0],
       value: memoRow,
     }));
 
-    const answer = await inquirer.prompt([{ name, type, message, choices }]);
+    const answer = await inquirer.prompt([
+      { name: "memo", type: "list", message, choices },
+    ]);
 
     return answer;
   }
