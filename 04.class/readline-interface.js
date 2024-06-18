@@ -8,6 +8,10 @@ class ReadlineInterface {
     });
 
     this.text = "";
+
+    this.readlineInterface.on("SIGINT", () => {
+      process.exit();
+    });
   }
 
   inputText() {
