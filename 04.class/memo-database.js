@@ -47,10 +47,10 @@ class MemoDatabase {
 
   async delete(id) {
     const query = "DELETE FROM memos WHERE id = ?";
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.db.run(query, id, function (err) {
         if (err) {
-          reject(err);
+          throw err;
         } else {
           resolve(this);
         }
@@ -59,12 +59,12 @@ class MemoDatabase {
   }
 
   async close() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.db.close((err) => {
         if (err) {
-          reject(err);
+          throw err;
         } else {
-          resolve();
+          resolve(this);
         }
       });
     });
