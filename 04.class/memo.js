@@ -55,10 +55,7 @@ class MemoApp {
       return;
     }
 
-    const answer = await this.#choose(
-      memos,
-      "Choose a memo you want to see:",
-    );
+    const answer = await this.#choose(memos, "Choose a memo you want to see:");
 
     const selectedText = answer.memo.text;
     if (selectedText) {
