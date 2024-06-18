@@ -40,10 +40,10 @@ class MemoDatabase {
     return memos;
   }
 
-  async insert(input) {
+  async insert(memo) {
     try {
       await this.promise.run(this.db, "INSERT INTO memos (text) VALUES (?)", [
-        input,
+        memo,
       ]);
     } catch (err) {
       if (err instanceof Error && err.code === "SQLITE_CONSTRAINT") {
