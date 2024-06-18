@@ -27,8 +27,17 @@ class MemoApp {
   }
 
   async #add() {
-    const input = await new ReadlineInterface().inputText();
-    this.memoDatabase.insert(input);
+    const readlineInterface = new ReadlineInterface();
+    try {
+      const input = await readlineInterface.inputText();
+      await this.memoDatabase.insert(input);
+    } catch (err) {
+      if (err.message === "SIGINT received") {
+        console.log("Input was interrupted by SIGINT.");
+      } else {
+        throw err;
+      }
+    }
   }
 
   async #list() {

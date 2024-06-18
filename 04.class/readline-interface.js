@@ -8,23 +8,29 @@ class ReadlineInterface {
     });
 
     this.text = "";
+    this.sigintReceived = false;
 
     this.readlineInterface.on("SIGINT", () => {
-      process.exit();
+      this.sigintReceived = true;
+      this.readlineInterface.close();
     });
   }
 
   inputText() {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       this.readlineInterface.on("line", (line) => {
         this.text += `${line}\n`;
       });
 
       this.readlineInterface.on("close", () => {
-        if (this.text.endsWith("\n")) {
-          this.text = this.text.slice(0, -1);
+        if (this.sigintReceived) {
+          reject(new Error("SIGINT received"));
+        } else {
+          if (this.text.endsWith("\n")) {
+            this.text = this.text.slice(0, -1);
+          }
+          resolve(this.text);
         }
-        resolve(this.text);
       });
     });
   }
