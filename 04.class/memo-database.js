@@ -5,7 +5,7 @@ class MemoDatabase {
     this.db = new sqlite3.Database("./memo.sqlite3");
   }
 
-  async ensureTableExists() {
+  ensureTableExists() {
     const query =
       "CREATE TABLE IF NOT EXISTS memos (id INTEGER PRIMARY KEY AUTOINCREMENT, text TEXT NOT NULL)";
     return new Promise((resolve) => {
@@ -19,7 +19,7 @@ class MemoDatabase {
     });
   }
 
-  async all() {
+  all() {
     const query = "SELECT id, text FROM memos ORDER BY id";
     return new Promise((resolve) => {
       this.db.all(query, (err, rows) => {
@@ -32,7 +32,7 @@ class MemoDatabase {
     });
   }
 
-  async insert(memo) {
+  insert(memo) {
     const query = "INSERT INTO memos (text) VALUES (?)";
     return new Promise((resolve) => {
       this.db.run(query, memo, (err) => {
@@ -45,7 +45,7 @@ class MemoDatabase {
     });
   }
 
-  async delete(id) {
+  delete(id) {
     const query = "DELETE FROM memos WHERE id = ?";
     return new Promise((resolve) => {
       this.db.run(query, id, function (err) {
@@ -58,7 +58,7 @@ class MemoDatabase {
     });
   }
 
-  async close() {
+  close() {
     return new Promise((resolve) => {
       this.db.close((err) => {
         if (err) {
