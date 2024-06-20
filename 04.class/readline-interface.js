@@ -9,15 +9,15 @@ class ReadlineInterface {
 
     this.text = "";
     this.sigintReceived = false;
-
-    this.readlineInterface.on("SIGINT", () => {
-      this.sigintReceived = true;
-      this.readlineInterface.close();
-    });
   }
 
   inputText() {
     return new Promise((resolve, reject) => {
+      this.readlineInterface.on("SIGINT", () => {
+        this.sigintReceived = true;
+        this.readlineInterface.close();
+      });
+
       this.readlineInterface.on("line", (line) => {
         this.text += `${line}\n`;
       });
