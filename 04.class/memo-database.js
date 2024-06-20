@@ -19,7 +19,7 @@ class MemoDatabase {
     });
   }
 
-  all() {
+  fetchAll() {
     const query = "SELECT id, text FROM memos ORDER BY id";
     return new Promise((resolve) => {
       this.db.all(query, (err, rows) => {

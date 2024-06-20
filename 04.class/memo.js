@@ -41,7 +41,7 @@ class MemoApp {
   }
 
   async #list() {
-    const memos = await this.memoDatabase.all();
+    const memos = await this.memoDatabase.fetchAll();
 
     memos.forEach((memo) => {
       console.log(memo.text.split("\n")[0]);
@@ -49,7 +49,7 @@ class MemoApp {
   }
 
   async #read() {
-    const memos = await this.memoDatabase.all();
+    const memos = await this.memoDatabase.fetchAll();
     if (memos.length === 0) {
       console.log("表示するメモがありません。");
       return;
@@ -61,7 +61,7 @@ class MemoApp {
   }
 
   async #delete() {
-    const memos = await this.memoDatabase.all();
+    const memos = await this.memoDatabase.fetchAll();
     if (memos.length === 0) {
       console.log("削除するメモがありません。");
       return;
