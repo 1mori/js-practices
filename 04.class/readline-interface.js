@@ -7,7 +7,7 @@ class ReadlineInterface {
       output: null
     });
 
-    this.text = "";
+    this.lines = [];
     this.sigintReceived = false;
   }
 
@@ -19,17 +19,14 @@ class ReadlineInterface {
       });
 
       this.readlineInterface.on("line", (line) => {
-        this.text += `${line}\n`;
+        this.lines.push(line);
       });
 
       this.readlineInterface.on("close", () => {
         if (this.sigintReceived) {
           reject(new Error("SIGINT received"));
         } else {
-          if (this.text.endsWith("\n")) {
-            this.text = this.text.slice(0, -1);
-          }
-          resolve(this.text);
+          resolve(this.lines.join("\n"));
         }
       });
     });
