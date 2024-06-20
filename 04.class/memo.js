@@ -57,10 +57,7 @@ class MemoApp {
 
     const answer = await this.#choose(memos, "Choose a memo you want to see:");
 
-    const selectedText = answer.memo.text;
-    if (selectedText) {
-      console.log(`\n${selectedText}`);
-    }
+    console.log(answer.memo.text);
   }
 
   async #delete() {
@@ -74,8 +71,7 @@ class MemoApp {
       "Choose a memo you want to delete:",
     );
 
-    const id = answer.memo.id;
-    this.memoDatabase.delete(id);
+    this.memoDatabase.delete(answer.memo.id);
   }
 
   async #choose(memos, message) {
