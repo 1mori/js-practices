@@ -75,9 +75,9 @@ class MemoApp {
   }
 
   async #choose(memos, message) {
-    const choices = memos.map((memoRow) => ({
-      name: memoRow.text.split("\n")[0],
-      value: memoRow,
+    const choices = memos.map((memo) => ({
+      name: memo.text.split("\n")[0],
+      value: memo,
     }));
 
     const answer = await inquirer.prompt([
