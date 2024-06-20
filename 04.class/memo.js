@@ -23,7 +23,7 @@ class MemoApp {
     } else {
       await this.#add();
     }
-    await this.memoDatabase.close(this.db);
+    await this.memoDatabase.close();
   }
 
   async #add() {
