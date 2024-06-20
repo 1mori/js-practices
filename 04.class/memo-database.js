@@ -32,10 +32,10 @@ class MemoDatabase {
     });
   }
 
-  insert(memo) {
+  insert(text) {
     const query = "INSERT INTO memos (text) VALUES (?)";
     return new Promise((resolve) => {
-      this.db.run(query, memo, (err) => {
+      this.db.run(query, text, (err) => {
         if (err) {
           throw err;
         } else {
