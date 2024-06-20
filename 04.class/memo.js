@@ -3,10 +3,10 @@
 import minimist from "minimist";
 import inquirer from "inquirer";
 
-import MemoDatabase from "./memo-database.js";
-import ReadlineInterface from "./readline-interface.js";
+import MemoDatabase from "./memoDatabase.js";
+import ReadlineInterface from "./readlineInterface.js";
 
-class MemoApp {
+class Memo {
   constructor() {
     this.option = minimist(process.argv.slice(2));
     this.memoDatabase = new MemoDatabase();
@@ -88,4 +88,4 @@ class MemoApp {
   }
 }
 
-new MemoApp().run();
+new Memo().run();
