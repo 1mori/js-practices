@@ -1,12 +1,10 @@
-#!/usr/bin/env node
-
 import minimist from "minimist";
 import inquirer from "inquirer";
 
 import MemoDatabase from "./memoDatabase.js";
 import ReadlineInterface from "./readlineInterface.js";
 
-class Memo {
+class MemoApp {
   constructor() {
     this.option = minimist(process.argv.slice(2));
     this.memoDatabase = new MemoDatabase();
@@ -88,4 +86,4 @@ class Memo {
   }
 }
 
-new Memo().run();
+export default MemoApp;
