@@ -4,7 +4,6 @@ class ReadlineInterface {
   constructor() {
     this.readlineInterface = readline.createInterface({
       input: process.stdin,
-      output: null,
     });
 
     this.lines = [];
