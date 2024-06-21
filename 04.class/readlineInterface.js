@@ -7,14 +7,13 @@ class ReadlineInterface {
     });
 
     this.lines = [];
-    this.sigintReceived = false;
   }
 
   inputText() {
     return new Promise((resolve, reject) => {
       this.readlineInterface.on("SIGINT", () => {
-        this.sigintReceived = true;
         this.readlineInterface.close();
+        reject(new Error("SIGINT received"));
       });
 
       this.readlineInterface.on("line", (line) => {
@@ -22,11 +21,7 @@ class ReadlineInterface {
       });
 
       this.readlineInterface.on("close", () => {
-        if (this.sigintReceived) {
-          reject(new Error("SIGINT received"));
-        } else {
-          resolve(this.lines.join("\n"));
-        }
+        resolve(this.lines.join("\n"));
       });
     });
   }
